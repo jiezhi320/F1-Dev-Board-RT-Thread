@@ -1,0 +1,227 @@
+C51 COMPILER V7.06   LCD                                                                   11/11/2011 23:23:38 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN LCD.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LCD.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          
+   3          
+   4          #define Bus_16        //16位数据模式,如果使用8位模式，请注释此语句，如果使用16位模式，请打开此句
+   5          #define  LCD_DataPortH P2     //高8位数据口,8位模式下只使用高8位 
+   6          #define  LCD_DataPortL P0     //低8位数据口     ,8位模式下低8位可以不接线,请确认P0口已经上拉10K电阻,不宜太小，
+             -最小4.7K,推荐10K.
+   7          sbit LCD_RS = P3^5;              //数据/命令切换
+   8          sbit LCD_WR = P3^6;               //写控制
+   9          sbit LCD_RD =P3^7;                   //读控制
+  10          sbit LCD_CS=P1^0;               //片选  
+  11          sbit LCD_REST = P1^2;         //复位   
+  12          
+  13          void delayms(int count)  // /* X1ms */
+  14          {
+  15   1              int i,j;
+  16   1              for(i=0;i<count;i++)
+  17   1                      for(j=0;j<1000;j++);
+  18   1      }
+  19          
+  20          #ifdef  Bus_16    //条件编译-16位数据模式   
+  21          void LCD_Writ_Bus(char VH,char VL)   //并行数据写入函数
+  22          {
+  23   1          LCD_DataPortH=VH;   
+  24   1              LCD_DataPortL=VL;               
+  25   1              LCD_WR=0;
+  26   1              LCD_WR=1; 
+  27   1      }
+  28          #else                   //条件编译-8位数据模式 
+              void LCD_Writ_Bus(char VH,char VL)   //并行数据写入函数
+              {       
+                  LCD_DataPortH=VH;   
+                      LCD_WR=0;
+                      LCD_WR=1;
+                      LCD_DataPortH=VL;               
+                      LCD_WR=0;
+                      LCD_WR=1;
+              }
+              #endif
+  39          
+  40          void Lcd_Write_Com(char VH,char VL)      //发送命令-8位参数
+  41          {       
+  42   1          LCD_RS=0;
+  43   1              LCD_Writ_Bus(VH,VL);
+  44   1      }
+  45          void Lcd_Write_Data(char VH,char VL) //发送数据-8位参数
+  46          {
+  47   1          LCD_RS=1;
+  48   1              LCD_Writ_Bus(VH,VL);
+  49   1      }
+  50          void Lcd_Write_Com_Data(int com,int val)                   //发送数据命令
+  51          {
+  52   1              Lcd_Write_Com(com>>8,com);
+  53   1          Lcd_Write_Data(val>>8,val);
+  54   1      }
+C51 COMPILER V7.06   LCD                                                                   11/11/2011 23:23:38 PAGE 2   
+
+  55          
+  56          void Address_set(unsigned int x1,unsigned int y1,unsigned int x2,unsigned int y2)
+  57          {
+  58   1              Lcd_Write_Com(0x00,0x20);Lcd_Write_Data(x1>>8,x1);        //设置X坐标位置
+  59   1          Lcd_Write_Com(0x00,0x21);Lcd_Write_Data(y1>>8,y1);   //设置Y坐标位置
+  60   1          Lcd_Write_Com(0x00,0x50);Lcd_Write_Data(x1>>8,x1);   //开始X
+  61   1              Lcd_Write_Com(0x00,0x52);Lcd_Write_Data(y1>>8,y1);        //开始Y
+  62   1          Lcd_Write_Com(0x00,0x51);Lcd_Write_Data(x2>>8,x2);   //结束X
+  63   1              Lcd_Write_Com(0x00,0x53);Lcd_Write_Data(y2>>8,y2);   //结束Y
+  64   1          Lcd_Write_Com(0x00,0x22);                                                    
+  65   1      }
+  66          
+  67          void Lcd_Init(void)
+  68          {
+  69   1      
+  70   1          LCD_REST=1;
+  71   1          delayms(5); 
+  72   1              LCD_REST=0;
+  73   1              delayms(5);
+  74   1              LCD_REST=1;
+  75   1              LCD_CS=1;
+  76   1              LCD_RD=1;
+  77   1              LCD_WR=1;
+  78   1              delayms(5);
+  79   1              
+  80   1      
+  81   1              LCD_CS =0;  //打开片选使能
+  82   1              //************* Start Initial Sequence **********//
+  83   1      
+  84   1       Lcd_Write_Com_Data(0x00e5, 0x8000);    
+  85   1                      Lcd_Write_Com_Data(0x0000, 0x0001);     
+  86   1                      Lcd_Write_Com_Data(0x0001, 0x0100);
+  87   1                      Lcd_Write_Com_Data(0x0002, 0x0700);
+  88   1                      Lcd_Write_Com_Data(0x0003, 0x1030);
+  89   1                      Lcd_Write_Com_Data(0x0004, 0x0000);
+  90   1                      Lcd_Write_Com_Data(0x0008, 0x0202);     
+  91   1                      Lcd_Write_Com_Data(0x0009, 0x0000);     
+  92   1                      Lcd_Write_Com_Data(0x000A, 0x0000);
+  93   1                      Lcd_Write_Com_Data(0x000C, 0x0000);     
+  94   1                      Lcd_Write_Com_Data(0x000D, 0x0000);     
+  95   1                      Lcd_Write_Com_Data(0x000F, 0x0000);     
+  96   1              //-----Power On sequence----------------------- 
+  97   1                      Lcd_Write_Com_Data(0x0010, 0x0000);     
+  98   1                      Lcd_Write_Com_Data(0x0011, 0x0007);     
+  99   1                      Lcd_Write_Com_Data(0x0012, 0x0000);     
+ 100   1                      Lcd_Write_Com_Data(0x0013, 0x0000);     
+ 101   1                      delayms(150);
+ 102   1                      Lcd_Write_Com_Data(0x0010, 0x17B0);     
+ 103   1                      Lcd_Write_Com_Data(0x0011, 0x0007);     
+ 104   1                      delayms(50);
+ 105   1                      Lcd_Write_Com_Data(0x0012, 0x013A);     
+ 106   1                      delayms(50);
+ 107   1                      Lcd_Write_Com_Data(0x0013, 0x1A00);     
+ 108   1                      Lcd_Write_Com_Data(0x0029, 0x000c);             
+ 109   1                      delayms(50);
+ 110   1              //-----Gamma control-----------------------     
+ 111   1                      Lcd_Write_Com_Data(0x0030, 0x0000);     
+ 112   1                      Lcd_Write_Com_Data(0x0031, 0x0505);     
+ 113   1                      Lcd_Write_Com_Data(0x0032, 0x0004);     
+ 114   1                      Lcd_Write_Com_Data(0x0035, 0x0006);     
+ 115   1                      Lcd_Write_Com_Data(0x0036, 0x0707);     
+ 116   1                      Lcd_Write_Com_Data(0x0037, 0x0105);     
+C51 COMPILER V7.06   LCD                                                                   11/11/2011 23:23:38 PAGE 3   
+
+ 117   1                      Lcd_Write_Com_Data(0x0038, 0x0002);     
+ 118   1                      Lcd_Write_Com_Data(0x0039, 0x0707);     
+ 119   1                      Lcd_Write_Com_Data(0x003C, 0x0704);     
+ 120   1                      Lcd_Write_Com_Data(0x003D, 0x0807);     
+ 121   1              //-----Set RAM area-----------------------      
+ 122   1                      Lcd_Write_Com_Data(0x0050, 0x0000);
+ 123   1                      Lcd_Write_Com_Data(0x0051, 0x00EF);
+ 124   1                      Lcd_Write_Com_Data(0x0052, 0x0000);
+ 125   1                      Lcd_Write_Com_Data(0x0053, 0x013F);
+ 126   1                      Lcd_Write_Com_Data(0x0060, 0x2700);
+ 127   1                      Lcd_Write_Com_Data(0x0061, 0x0001);
+ 128   1                      Lcd_Write_Com_Data(0x006A, 0x0000);
+ 129   1                      Lcd_Write_Com_Data(0x0021, 0x0000);     
+ 130   1                      Lcd_Write_Com_Data(0x0020, 0x0000);     
+ 131   1              //-----Partial Display Control------------      
+ 132   1                      Lcd_Write_Com_Data(0x0080, 0x0000);     
+ 133   1                      Lcd_Write_Com_Data(0x0081, 0x0000);
+ 134   1                      Lcd_Write_Com_Data(0x0082, 0x0000);
+ 135   1                      Lcd_Write_Com_Data(0x0083, 0x0000);
+ 136   1                      Lcd_Write_Com_Data(0x0084, 0x0000);     
+ 137   1                      Lcd_Write_Com_Data(0x0085, 0x0000);
+ 138   1              //-----Panel Control----------------------
+ 139   1                      Lcd_Write_Com_Data(0x0090, 0x0010);     
+ 140   1                      Lcd_Write_Com_Data(0x0092, 0x0000);
+ 141   1                      Lcd_Write_Com_Data(0x0093, 0x0003);
+ 142   1                      Lcd_Write_Com_Data(0x0095, 0x0110);
+ 143   1                      Lcd_Write_Com_Data(0x0097, 0x0000);     
+ 144   1                      Lcd_Write_Com_Data(0x0098, 0x0000);
+ 145   1              //-----Display on-----------------------        
+ 146   1                      Lcd_Write_Com_Data(0x0007, 0x0173);     
+ 147   1                      delayms(50);
+ 148   1      
+ 149   1              LCD_CS =1;  //关闭片选使能
+ 150   1      
+ 151   1      }
+ 152          
+ 153          void Pant(char VH,char VL)
+ 154          {
+ 155   1              int i,j;
+ 156   1              LCD_CS =0;  //打开片选使能
+ 157   1              Address_set(0,0,239,319);
+ 158   1          for(i=0;i<320;i++)
+ 159   1               {
+ 160   2                for (j=0;j<240;j++)
+ 161   2                      {
+ 162   3                       Lcd_Write_Data(VH,VL);
+ 163   3                  }
+ 164   2      
+ 165   2                }
+ 166   1           LCD_CS =1;  //关闭片选使能
+ 167   1      }        
+ 168          main()
+ 169          { 
+ 170   1              Lcd_Init();          //TFT初始化
+ 171   1              Pant(0xff,0xff);         //TFT清屏      
+ 172   1              while(1)
+ 173   1              {
+ 174   2                  Pant(0xf8,0x00); //红色
+ 175   2                      delayms(2000);
+ 176   2                  Pant(0X07,0xE0); //绿色
+ 177   2                      delayms(2000);
+ 178   2                  Pant(0x00,0x1f); //蓝色                      
+C51 COMPILER V7.06   LCD                                                                   11/11/2011 23:23:38 PAGE 4   
+
+ 179   2              delayms(2000);
+ 180   2          }
+ 181   1      
+ 182   1      
+ 183   1      
+ 184   1      }
+ 185          
+ 186          
+ 187          
+ 188          
+ 189          
+ 190          
+ 191          
+ 192          
+ 193          
+ 194          
+ 195          
+ 196          
+ 197          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    746    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      11
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

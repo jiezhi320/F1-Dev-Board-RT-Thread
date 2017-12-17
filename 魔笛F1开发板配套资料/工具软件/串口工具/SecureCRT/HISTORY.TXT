@@ -1,0 +1,181 @@
+
+             SecureCRT(R) 5.5 (Official) -- April 5, 2007
+
+            Copyright (C) 1995-2007 VanDyke Software, Inc.
+                        All rights reserved.
+
+
+This file contains a SecureCRT product history.  It includes lists 
+of new features, changes, and bug fixes sorted by release.  For a 
+product description, installation notes, registration information,
+and contact information, please refer to Readme.txt (downloaded 
+with this installation).
+
+
+Changes in SecureCRT 5.5 (Official) -- April 5, 2007
+----------------------------------------------------
+
+Changes:
+
+  - SSH2: The SSH_IGNORE message is only shown in trace output when
+    the session's trace level is set to a value greater than one.
+
+
+Changes in SecureCRT 5.5 (Beta 4) -- March 27, 2007
+---------------------------------------------------
+
+Bug fixes:
+
+  - VT100 line-drawing characters were not displayed correctly under
+    Windows Vista or when the East Asian language pack was installed.
+  - The word delimiter characters session setting did not work
+    correctly for tabbed sessions.
+  - If the log file name or custom log data substitution %h (2-digit
+    hour) was used between 03/11/07 and 03/31/07 or 10/28/07 and
+    11/03/07, the hours could have been off by an hour.
+  - SSH2: SecureCRT crashed when attempting to convert a file that was
+    not a private key to OpenSSH format.
+
+
+Changes in SecureCRT 5.5 (Beta 3) -- March 15, 2007
+---------------------------------------------------
+
+New features:
+
+  - SSH1/SSH2: Added support for optionally making SecureCRT the
+    default URL handler for SSH1 and SSH2.
+  - SSH2: Added support for exporting public keys from X.509
+    certificates.
+
+Changes:
+
+  - SSH1/SSH2: Added a command-line option (/Z 0) which turns off
+    compression.
+  - SSH2: In order to be compliant with the IETF draft
+    draft-saarenmaa-ssh-x509-00.txt, the SHA1 hash algorithm is used
+    by default with X.509 RSA host keys and public keys.
+  - SSH2: Additional certificate information is shown in the trace
+    output and the certificate error dialog when attempting to use
+    an X.509 certificate for authentication.
+
+Bug fixes:
+
+  - The escape sequence to turn off line wrap mode was honored even
+    though the option "Enable line wrap mode switching" was off.
+
+
+Changes in SecureCRT 5.5 (Beta 2) -- February 27, 2007
+------------------------------------------------------
+
+Changes:
+
+  - The default font has been changed to "Lucida Console" due to a
+    Windows Vista compatibility issue.  This change only affects new
+    installations of SecureCRT.
+  - It is now possible to change the passphrase for an OpenSSH style
+    private key.
+  - When the Disconnect custom string is logged, an end of line is
+    appended.
+
+Bug fixes:
+
+  - If the "Open in a tab" option was off in the Connect dialog and
+    multiple sessions were selected after choosing the "Connect in
+    Tabs" menu item, the sessions were not opened in tabs.
+  - If the specified log file was a valid path, but did not have a
+    filename and the "Prompt for filename" option was not set, when
+    logging started, an error that the specified file could not be
+    created was reported.
+  - After choosing to integrate SecureCRT and SecureFX, if privileges
+    were not sufficient to write to the registry, it was possible to
+    repeatedly be prompted to integrate.
+  - SSH1:  If an SSH1 session was disconnected while a terminal window
+    size change was in progress, SecureCRT could crash.
+  - SSH2: Attempting to generate a DSA key that was not a multiple of
+    64 resulted in an Unknown Application Error.
+  - SFTP: Under certain circumstances, ASCII files being transferred
+    in an SFTP tab were corrupted.
+
+
+Changes in SecureCRT 5.5 (Beta 1) -- February 8, 2007
+-----------------------------------------------------
+
+New features:
+
+  - Windows Vista support.
+  - Added a script recorder, which generates VB scripts.  When
+    "Start Recording Script" is selected from the Script menu, all
+    keystrokes in the current session are recorded until "Stop
+    Recording Script" is selected.
+  - A set of sessions can be launched automatically on startup by
+    specifying folders or multiple sessions as auto sessions.
+  - Added the ability to insert custom data to log files.  Custom
+    data can be inserted when a session connects, disconnects, or
+    on each line.  Substitution parameters for session, date, and
+    time information are supported.  Additionally, there is an
+    option to log only custom data.
+  - When ANSI color is being used, it is now possible to use a color
+    scheme, which allows the background to be something other than
+    black and the foreground to be something other than white.
+  - Added script function GetScriptTab, which returns the tab from
+    which the script was started.
+  - Added new custom menu item MENU_TAB_LIST1, which causes all the
+    tabbed sessions to be displayed in the menu.
+  - SFTP: Added "ascii" and "binary" command options to the SFTP tab.
+  - SSH2: Added support for generating OpenSSH format keys and for
+    converting VanDyke format private keys to OpenSSH format.
+  - SSH2: Added a global option to cache passwords for SSH2
+    sessions.
+  - SSH2: Added support for zlib@openssh.com compression.  With this
+    compression method, compression does not start until after
+    authentication, which prevents unencrypted passwords from being
+    cached by the zlib library.
+
+Changes:
+
+  - By default, Internet Explorer 7 disables Telnet through a
+    registry setting.  Added support for overriding this setting
+    so that SecureCRT can be set as the default Telnet application.
+    Administrator privileges are required in order to override the
+    setting.  Versions of Internet Explorer prior to 7 are not
+    affected by this change.
+  - When multiple sessions are opened from the "Connect" dialog, if
+    the "Open in a tab" setting is off, the sessions are opened in
+    tabs in a new window.
+  - The chat window can now be toggled when SecureCRT is maximized
+    or full screen.
+  - When creating a session, if the Terminal, VT100, or VT102 font
+    is selected, the "Use Unicode line-drawing characters" will be
+    unchecked.
+  - The "Save connected folder state" option was moved from the
+    "Connect" dialog to the "General" page in the "Global Options"
+    dialog.
+  - Files with .VBE extension are included in the Script Files
+    filter in the "Select Script to Run" dialog.
+
+Bug fixes:
+
+  - Under certain circumstances, text was highlighted incorrectly
+    after highlighted text had been pasted into a session.
+  - Under certain circumstances, when SecureCRT got an error and
+    became unresponsive, the Migration wizard ran.
+  - It was not possible to cancel out of the "Global Options" dialog
+    if an incorrect status indicator width or minimum tab width was
+    entered.
+  - When using send string functionality with a mapped key, \p
+    (pause) did not work correctly.
+  - If the specified log file was a valid path, but did not have a
+    filename and the "Prompt for filename" option was not set, when
+    logging started, an error that the specified file could not be
+    created was reported.
+  - If a script that connected to a session was run in a tabbed
+    session that had been disconnected, the script hung.
+  - The script function ConnectInTab used the default session font
+    instead of the specified session's font.
+  - The /SCRIPT command-line argument was not honored when /T was
+    used and the session was opened in a tab other than the first
+    tab.  
+  - SSH1: The command-line option /I pubkeyfile command-line option
+    did not work with /SSH1.
+  - SSH2: Under certain circumstances, using a SOCKS proxy caused
+    the Secure Shell transport to hang.

@@ -1,0 +1,564 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        05/27/2011  17:13:16  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+D:\KEIL\C51\BIN\BL51.EXE SDTFT.obj TO SDTFT RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  SDTFT.obj (SDTFT)
+  D:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+  D:\KEIL\C51\LIB\C51S.LIB (?C?CSTPTR)
+  D:\KEIL\C51\LIB\C51S.LIB (?C?LMUL)
+  D:\KEIL\C51\LIB\C51S.LIB (?C?ULCMP)
+
+
+LINK MAP OF MODULE:  SDTFT (SDTFT)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     001DH     UNIT         _DATA_GROUP_
+            DATA    0025H     0009H     UNIT         ?DT?_SDWRITEBLOCK?SDTFT
+            DATA    002EH     0006H     UNIT         ?DT?_CLEARSCREEN?SDTFT
+            IDATA   0034H     0001H     UNIT         ?STACK
+
+            * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
+            XDATA   0000H     0200H     UNIT         ?XD?SDTFT
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     01DEH     UNIT         ?PR?LGDP6522_INIT?SDTFT
+            CODE    01E1H     0132H     UNIT         ?PR?MAIN?SDTFT
+            CODE    0313H     0097H     UNIT         ?PR?_SDWRITEBLOCK?SDTFT
+            CODE    03AAH     008BH     UNIT         ?C?LIB_CODE
+            CODE    0435H     0075H     UNIT         ?PR?_SDREADBLOCK?SDTFT
+            CODE    04AAH     0067H     UNIT         ?PR?SDINIT?SDTFT
+            CODE    0511H     0049H     UNIT         ?PR?_CLEARSCREEN?SDTFT
+            CODE    055AH     0049H     UNIT         ?PR?_LCD_SETPOS?SDTFT
+            CODE    05A3H     0024H     UNIT         ?PR?_DELAYMS?SDTFT
+            CODE    05C7H     0020H     UNIT         ?PR?_SDCOMMAND?SDTFT
+            CODE    05E7H     001AH     UNIT         ?PR?_SDWRITE?SDTFT
+            CODE    0601H     0019H     UNIT         ?PR?_INIT_DATA?SDTFT
+            CODE    061AH     0016H     UNIT         ?PR?SDRESPONSE?SDTFT
+            CODE    0630H     0013H     UNIT         ?PR?SDREAD?SDTFT
+            CODE    0643H     000FH     UNIT         ?PR?_WRITE_CMD?SDTFT
+            CODE    0652H     000FH     UNIT         ?PR?_WRITE_DATA?SDTFT
+            CODE    0661H     000CH     UNIT         ?C_C51STARTUP
+            CODE    066DH     0009H     UNIT         ?PR?_WRITE_DATA_U16?SDTFT
+
+
+
+OVERLAY MAP OF MODULE:   SDTFT (SDTFT)
+
+
+BL51 BANKED LINKER/LOCATER V5.03                                                      05/27/2011  17:13:16  PAGE 2
+
+
+SEGMENT                             DATA_GROUP 
+  +--> CALLED SEGMENT             START    LENGTH
+-------------------------------------------------
+?C_C51STARTUP                     -----    -----
+  +--> ?PR?MAIN?SDTFT
+
+?PR?MAIN?SDTFT                    0008H    000EH
+  +--> ?PR?_DELAYMS?SDTFT
+  +--> ?PR?LGDP6522_INIT?SDTFT
+  +--> ?PR?SDINIT?SDTFT
+  +--> ?PR?_SDREADBLOCK?SDTFT
+  +--> ?PR?_LCD_SETPOS?SDTFT
+  +--> ?PR?_WRITE_DATA?SDTFT
+
+?PR?LGDP6522_INIT?SDTFT           -----    -----
+  +--> ?PR?_DELAYMS?SDTFT
+  +--> ?PR?_INIT_DATA?SDTFT
+  +--> ?PR?_WRITE_CMD?SDTFT
+
+?PR?_INIT_DATA?SDTFT              001EH    0002H
+  +--> ?PR?_WRITE_CMD?SDTFT
+  +--> ?PR?_WRITE_DATA?SDTFT
+
+?PR?SDINIT?SDTFT                  0016H    0004H
+  +--> ?PR?_SDWRITE?SDTFT
+  +--> ?PR?_SDCOMMAND?SDTFT
+  +--> ?PR?SDRESPONSE?SDTFT
+
+?PR?_SDCOMMAND?SDTFT              001FH    0006H
+  +--> ?PR?_SDWRITE?SDTFT
+
+?PR?SDRESPONSE?SDTFT              -----    -----
+  +--> ?PR?SDREAD?SDTFT
+
+?PR?_SDREADBLOCK?SDTFT            0016H    0009H
+  +--> ?PR?_SDCOMMAND?SDTFT
+  +--> ?PR?SDRESPONSE?SDTFT
+  +--> ?PR?SDREAD?SDTFT
+
+?PR?_LCD_SETPOS?SDTFT             0016H    0008H
+  +--> ?PR?_INIT_DATA?SDTFT
+  +--> ?PR?_WRITE_CMD?SDTFT
+
+
+
+SYMBOL TABLE OF MODULE:  SDTFT (SDTFT)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        SDTFT
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0435H         PUBLIC        _SdReadBlock
+BL51 BANKED LINKER/LOCATER V5.03                                                      05/27/2011  17:13:16  PAGE 3
+
+
+  B:00B0H.3       PUBLIC        SD_DI
+  B:00B0H.1       PUBLIC        SD_DO
+  C:061AH         PUBLIC        SdResponse
+  B:00B0H.4       PUBLIC        SD_CS
+  D:00A8H         PUBLIC        IE
+  C:0003H         PUBLIC        LGDP6522_init
+  C:0313H         PUBLIC        _SdWriteBlock
+  B:0090H.0       PUBLIC        CS
+  D:00B8H         PUBLIC        IP
+  X:0000H         PUBLIC        DATA
+  B:00B0H.5       PUBLIC        RS
+  C:05EEH         PUBLIC        _SdWrite
+  C:01E1H         PUBLIC        main
+  B:00B0H.6       PUBLIC        RW
+  C:0511H         PUBLIC        _ClearScreen
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0630H         PUBLIC        SdRead
+  C:0652H         PUBLIC        _Write_Data
+  C:04AAH         PUBLIC        SdInit
+  B:00B0H.2       PUBLIC        SD_CLK
+  C:05A7H         PUBLIC        _delayms
+  C:05C7H         PUBLIC        _SdCommand
+  C:0643H         PUBLIC        _Write_Cmd
+  C:066DH         PUBLIC        _Write_Data_U16
+  D:00C8H         PUBLIC        T2CON
+  B:0090H.1       PUBLIC        RES
+  C:0604H         PUBLIC        _Init_data
+  C:055AH         SYMBOL        _LCD_SetPos
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _CLEARSCREEN
+  D:002EH         SYMBOL        bColor
+  -------         DO            
+  D:0030H         SYMBOL        i
+  D:0032H         SYMBOL        j
+  -------         ENDDO         
+  C:0511H         LINE#         55
+  C:0515H         LINE#         56
+  C:0515H         LINE#         58
+  C:0526H         LINE#         59
+  C:052BH         LINE#         60
+  C:052BH         LINE#         62
+  C:0530H         LINE#         63
+  C:0548H         LINE#         64
+  C:0559H         LINE#         65
+  -------         ENDPROC       _CLEARSCREEN
+  -------         PROC          L?0092
+  -------         ENDPROC       L?0092
+  -------         PROC          _INIT_DATA
+  D:0005H         SYMBOL        x
+  D:0002H         SYMBOL        y
+  -------         DO            
+  D:001EH         SYMBOL        m
+  D:001FH         SYMBOL        n
+  -------         ENDDO         
+  C:0604H         LINE#         71
+  C:060AH         LINE#         72
+BL51 BANKED LINKER/LOCATER V5.03                                                      05/27/2011  17:13:16  PAGE 4
+
+
+  C:060AH         LINE#         74
+  C:060CH         LINE#         75
+  C:060EH         LINE#         76
+  C:0613H         LINE#         77
+  -------         ENDPROC       _INIT_DATA
+  -------         PROC          _WRITE_DATA_U16
+  D:0004H         SYMBOL        y
+  -------         DO            
+  D:0007H         SYMBOL        m
+  D:0005H         SYMBOL        n
+  -------         ENDDO         
+  C:066DH         LINE#         85
+  C:0671H         LINE#         86
+  C:0671H         LINE#         88
+  C:0673H         LINE#         89
+  C:0673H         LINE#         90
+  -------         ENDPROC       _WRITE_DATA_U16
+  -------         PROC          _WRITE_CMD
+  D:0007H         SYMBOL        DH
+  D:0005H         SYMBOL        DL
+  C:0643H         LINE#         96
+  C:0643H         LINE#         97
+  C:0643H         LINE#         99
+  C:0645H         LINE#         100
+  C:0647H         LINE#         102
+  C:0649H         LINE#         103
+  C:064BH         LINE#         105
+  C:064DH         LINE#         106
+  C:064FH         LINE#         107
+  C:0651H         LINE#         108
+  -------         ENDPROC       _WRITE_CMD
+  -------         PROC          _WRITE_DATA
+  D:0007H         SYMBOL        DH
+  D:0005H         SYMBOL        DL
+  C:0652H         LINE#         113
+  C:0652H         LINE#         114
+  C:0652H         LINE#         118
+  C:0654H         LINE#         120
+  C:0656H         LINE#         121
+  C:0658H         LINE#         123
+  C:065AH         LINE#         124
+  C:065CH         LINE#         125
+  C:065EH         LINE#         126
+  C:0660H         LINE#         127
+  -------         ENDPROC       _WRITE_DATA
+  C:05A3H         SYMBOL        L?0091
+  -------         PROC          L?0090
+  -------         ENDPROC       L?0090
+  C:05A3H         SYMBOL        L?0091
+  -------         PROC          _DELAYMS
+  D:0006H         SYMBOL        count
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:05A7H         LINE#         135
+  C:05A7H         LINE#         136
+BL51 BANKED LINKER/LOCATER V5.03                                                      05/27/2011  17:13:16  PAGE 5
+
+
+  C:05A7H         LINE#         138
+  C:05B1H         LINE#         139
+  C:05B1H         LINE#         140
+  C:05BFH         LINE#         141
+  C:05C6H         LINE#         142
+  -------         ENDPROC       _DELAYMS
+  -------         PROC          LGDP6522_INIT
+  C:0003H         LINE#         149
+  C:0003H         LINE#         150
+  C:0003H         LINE#         151
+  C:0005H         LINE#         152
+  C:000CH         LINE#         153
+  C:0018H         LINE#         154
+  C:0024H         LINE#         155
+  C:002CH         LINE#         156
+  C:0038H         LINE#         157
+  C:0044H         LINE#         158
+  C:0050H         LINE#         159
+  C:005AH         LINE#         160
+  C:0065H         LINE#         161
+  C:006DH         LINE#         162
+  C:0079H         LINE#         163
+  C:0084H         LINE#         164
+  C:008FH         LINE#         165
+  C:009BH         LINE#         166
+  C:00A7H         LINE#         167
+  C:00B3H         LINE#         168
+  C:00BEH         LINE#         169
+  C:00C9H         LINE#         170
+  C:00D4H         LINE#         171
+  C:00DFH         LINE#         172
+  C:00EAH         LINE#         173
+  C:00F6H         LINE#         174
+  C:0101H         LINE#         175
+  C:010CH         LINE#         176
+  C:0118H         LINE#         177
+  C:0123H         LINE#         178
+  C:012FH         LINE#         179
+  C:013BH         LINE#         180
+  C:0147H         LINE#         181
+  C:0153H         LINE#         182
+  C:015FH         LINE#         183
+  C:016BH         LINE#         184
+  C:0177H         LINE#         185
+  C:0183H         LINE#         186
+  C:018FH         LINE#         187
+  C:019BH         LINE#         188
+  C:01A7H         LINE#         189
+  C:01B2H         LINE#         190
+  C:01BDH         LINE#         191
+  C:01C9H         LINE#         192
+  C:01D1H         LINE#         193
+  C:01D9H         LINE#         194
+  C:01DEH         LINE#         273
+  C:01E0H         LINE#         275
+  -------         ENDPROC       LGDP6522_INIT
+  -------         PROC          _LCD_SETPOS
+BL51 BANKED LINKER/LOCATER V5.03                                                      05/27/2011  17:13:16  PAGE 6
+
+
+  D:0016H         SYMBOL        x0
+  D:0018H         SYMBOL        x1
+  D:001AH         SYMBOL        y0
+  D:001CH         SYMBOL        y1
+  C:055AH         LINE#         283
+  C:0566H         LINE#         284
+  C:0566H         LINE#         285
+  C:056FH         LINE#         286
+  C:0578H         LINE#         287
+  C:0581H         LINE#         288
+  C:058AH         LINE#         289
+  C:0593H         LINE#         290
+  C:059CH         LINE#         291
+  -------         ENDPROC       _LCD_SETPOS
+  -------         PROC          L?0093
+  -------         ENDPROC       L?0093
+  -------         PROC          _SDWRITE
+  D:0007H         SYMBOL        n
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:05EEH         LINE#         42
+  C:05EEH         LINE#         43
+  C:05EEH         LINE#         47
+  C:05F0H         LINE#         48
+  C:05F0H         LINE#         49
+  C:05F2H         LINE#         50
+  C:05F6H         LINE#         51
+  C:05FAH         LINE#         52
+  C:05FCH         LINE#         53
+  C:05FEH         LINE#         54
+  C:0600H         LINE#         55
+  -------         ENDPROC       _SDWRITE
+  -------         PROC          SDREAD
+  -------         DO            
+  D:0007H         SYMBOL        n
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0630H         LINE#         58
+  C:0630H         LINE#         59
+  C:0630H         LINE#         61
+  C:0632H         LINE#         62
+  C:0632H         LINE#         63
+  C:0634H         LINE#         64
+  C:0636H         LINE#         65
+  C:063AH         LINE#         66
+  C:0640H         LINE#         68
+  C:0642H         LINE#         69
+  C:0642H         LINE#         70
+  -------         ENDPROC       SDREAD
+  -------         PROC          SDRESPONSE
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0005H         SYMBOL        response
+  -------         ENDDO         
+  C:061AH         LINE#         73
+  C:061AH         LINE#         74
+BL51 BANKED LINKER/LOCATER V5.03                                                      05/27/2011  17:13:16  PAGE 7
+
+
+  C:061AH         LINE#         75
+  C:061CH         LINE#         77
+  C:061CH         LINE#         78
+  C:061CH         LINE#         79
+  C:0621H         LINE#         80
+  C:0624H         LINE#         81
+  C:0624H         LINE#         82
+  C:0629H         LINE#         83
+  C:0629H         LINE#         84
+  C:062AH         LINE#         85
+  C:062DH         LINE#         86
+  C:062FH         LINE#         87
+  -------         ENDPROC       SDRESPONSE
+  -------         PROC          _SDCOMMAND
+  D:0007H         SYMBOL        command
+  D:0020H         SYMBOL        argument
+  D:0024H         SYMBOL        CRC
+  C:05C7H         LINE#         90
+  C:05C7H         LINE#         91
+  C:05C7H         LINE#         93
+  C:05CEH         LINE#         94
+  C:05D3H         LINE#         95
+  C:05D8H         LINE#         96
+  C:05DDH         LINE#         97
+  C:05E2H         LINE#         98
+  -------         ENDPROC       _SDCOMMAND
+  -------         PROC          SDINIT
+  -------         DO            
+  D:0016H         SYMBOL        delay
+  D:0018H         SYMBOL        trials
+  D:0004H         SYMBOL        i
+  D:0005H         SYMBOL        response
+  -------         ENDDO         
+  C:04AAH         LINE#         102
+  C:04AAH         LINE#         103
+  C:04AAH         LINE#         104
+  C:04B3H         LINE#         106
+  C:04B5H         LINE#         108
+  C:04B7H         LINE#         109
+  C:04B8H         LINE#         110
+  C:04C1H         LINE#         111
+  C:04C3H         LINE#         114
+  C:04D3H         LINE#         117
+  C:04D8H         LINE#         119
+  C:04DDH         LINE#         120
+  C:04DDH         LINE#         121
+  C:04E0H         LINE#         122
+  C:04E0H         LINE#         124
+  C:04E3H         LINE#         125
+  C:04E3H         LINE#         126
+  C:04E5H         LINE#         127
+  C:04EAH         LINE#         128
+  C:04ECH         LINE#         129
+  C:0500H         LINE#         130
+  C:0505H         LINE#         131
+  C:0507H         LINE#         133
+  C:0509H         LINE#         134
+BL51 BANKED LINKER/LOCATER V5.03                                                      05/27/2011  17:13:16  PAGE 8
+
+
+  C:050EH         LINE#         135
+  C:0510H         LINE#         136
+  -------         ENDPROC       SDINIT
+  -------         PROC          _SDWRITEBLOCK
+  D:0025H         SYMBOL        Block
+  D:0028H         SYMBOL        address
+  D:002CH         SYMBOL        len
+  -------         DO            
+  D:0004H         SYMBOL        count
+  D:0005H         SYMBOL        dataResp
+  -------         ENDDO         
+  C:0313H         LINE#         139
+  C:0321H         LINE#         140
+  C:0321H         LINE#         146
+  C:0323H         LINE#         148
+  C:0333H         LINE#         150
+  C:0339H         LINE#         151
+  C:0339H         LINE#         152
+  C:0339H         LINE#         153
+  C:033CH         LINE#         154
+  C:0341H         LINE#         157
+  C:0346H         LINE#         159
+  C:036EH         LINE#         161
+  C:0380H         LINE#         163
+  C:0380H         LINE#         164
+  C:0383H         LINE#         165
+  C:0388H         LINE#         167
+  C:038EH         LINE#         169
+  C:0391H         LINE#         170
+  C:0393H         LINE#         171
+  C:0398H         LINE#         172
+  C:039BH         LINE#         173
+  C:039BH         LINE#         174
+  C:039EH         LINE#         175
+  C:039EH         LINE#         176
+  C:03A1H         LINE#         177
+  C:03A4H         LINE#         179
+  C:03A7H         LINE#         180
+  C:03A7H         LINE#         181
+  C:03A9H         LINE#         182
+  -------         ENDPROC       _SDWRITEBLOCK
+  -------         PROC          _SDREADBLOCK
+  D:0016H         SYMBOL        Block
+  D:0019H         SYMBOL        address
+  D:001DH         SYMBOL        len
+  -------         DO            
+  D:0004H         SYMBOL        count
+  -------         ENDDO         
+  C:0435H         LINE#         186
+  C:0443H         LINE#         187
+  C:0443H         LINE#         194
+  C:0445H         LINE#         196
+  C:0455H         LINE#         198
+  C:045BH         LINE#         199
+  C:045BH         LINE#         202
+  C:0461H         LINE#         204
+  C:0489H         LINE#         206
+BL51 BANKED LINKER/LOCATER V5.03                                                      05/27/2011  17:13:16  PAGE 9
+
+
+  C:0499H         LINE#         209
+  C:049CH         LINE#         210
+  C:049FH         LINE#         212
+  C:04A1H         LINE#         213
+  C:04A4H         LINE#         214
+  C:04A7H         LINE#         215
+  C:04A7H         LINE#         217
+  C:04A9H         LINE#         218
+  -------         ENDPROC       _SDREADBLOCK
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        x
+  D:000AH         SYMBOL        y
+  D:000CH         SYMBOL        j
+  D:0010H         SYMBOL        i
+  D:0012H         SYMBOL        AddTemp
+  -------         ENDDO         
+  C:01E1H         LINE#         222
+  C:01E1H         LINE#         223
+  C:01E1H         LINE#         227
+  C:01EDH         LINE#         228
+  C:01EFH         LINE#         229
+  C:01F6H         LINE#         230
+  C:01F8H         LINE#         231
+  C:01FDH         LINE#         232
+  C:01FFH         LINE#         233
+  C:0204H         LINE#         234
+  C:0207H         LINE#         235
+  C:020AH         LINE#         236
+  C:020AH         LINE#         237
+  C:020AH         LINE#         239
+  C:022BH         LINE#         240
+  C:022BH         LINE#         241
+  C:0255H         LINE#         242
+  C:025AH         LINE#         243
+  C:025AH         LINE#         244
+  C:026FH         LINE#         245
+  C:0293H         LINE#         246
+  C:029BH         LINE#         247
+  C:02A1H         LINE#         248
+  C:02A1H         LINE#         249
+  C:02A9H         LINE#         250
+  C:02AEH         LINE#         251
+  C:02B8H         LINE#         252
+  C:02BDH         LINE#         253
+  C:02BDH         LINE#         254
+  C:02CCH         LINE#         255
+  C:02E4H         LINE#         256
+  C:0309H         LINE#         257
+  C:0310H         LINE#         259
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        SDTFT
+
+  -------         MODULE        ?C?CLDPTR
+  C:03AAH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+BL51 BANKED LINKER/LOCATER V5.03                                                      05/27/2011  17:13:16  PAGE 10
+
+
+  -------         MODULE        ?C?CSTPTR
+  C:03C3H         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?LMUL
+  C:03D5H         PUBLIC        ?C?LMUL
+  -------         ENDMOD        ?C?LMUL
+
+  -------         MODULE        ?C?ULCMP
+  C:0424H         PUBLIC        ?C?ULCMP
+  -------         ENDMOD        ?C?ULCMP
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_CLEARSCREEN?SDTFT
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SDWRITEBLOCK?SDTFT
+
+Program Size: data=53.0 xdata=512 code=1654
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)

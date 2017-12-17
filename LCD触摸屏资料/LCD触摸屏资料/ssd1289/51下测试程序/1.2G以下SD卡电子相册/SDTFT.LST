@@ -1,0 +1,294 @@
+C51 COMPILER V7.06   SDTFT                                                                 05/27/2011 17:13:16 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE SDTFT
+OBJECT MODULE PLACED IN SDTFT.OBJ
+COMPILER INVOKED BY: d:\Keil\C51\BIN\C51.EXE SDTFT.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1                            /*-----------------------------------------------
+   2            Ãû³Æ£º¶ÁSD¿¨Ð´²ÊÆÁ
+   3            ¹«Ë¾£ºË¶Ò«µç×Ó
+   4            ÍøÕ¾£ºhttp://shop58797699.taobao.com/
+   5            ±àÐ´£ººÎ
+   6            ÈÕÆÚ£º
+   7            ÄÚÈÝ£ºÍ¨¹ý¶Á³öSD¿¨ÖÐ320x240ÏñËØ¡¢16Î»BMPÍ¼Æ¬µÄHEXÊý¾Ý£¬ÒÀ´ÎÐ´µ½ÆÁÉÏ£¬»¹Ô­Í¼Æ¬
+   8            ×¢ÒâÊÂÏî£ºÓÉÓÚSD¿¨Ê¹ÓÃSPIÄ£Ê½£¬²¢ÇÒÊÇ¿é¶ÁÈ¡(512Byte),ËùÒÔÐèÒªµ¥Æ¬»úÌá¹©´óÓÚ512µÄ¿ÉÓÃRAM£¬ÒÔ¹©»º³åÊ¹ÓÃ
+   9                      ÕâÀï¿ÉÒÔÑ¡ÔñSTC89c52RD+¡¢STC89C58RD+¡¢STC89C516RD+£¬ºó×ºRD+±íÃ÷À©Õ¹RAMÊÇ1024×Ö½Ú£¬RC±íÃ÷À©Õ¹RA
+             -M256×Ö½Ú
+  10          ------------------------------------------------*/
+  11          #include <reg52.h>
+  12          #include <stdio.h>
+  13          #include<6522TP.h>
+*** WARNING C209 IN LINE 194 OF 6522TP.H: '_Write_Cmd': too few actual parameters
+  14          /*Ë¶Ò«µç×Ó¿Æ¼¼ http://hyao.taobao.com/ 
+  15          µ¥Æ¬»ú¹¤×÷µçÑ¹3.3V
+  16          ³ÌÐòÄ¬ÈÏIOÁ¬½Ó·½Ê½£º
+  17          
+  18          ¿ØÖÆÏß£ºRS-P3^5;    WR-P3^6;   RD-P3^7;   CS-P1^0;   REST-P1^1;
+  19          
+  20          Êý¾ÝÏß: DB0-DB7ÒÀ´ÎÁ¬½ÓP0^0-P0^7;  DB8-DB15ÒÀ´ÎÁ¬½ÓP2^0-P2^7;
+  21          
+  22          ´¥Ãþ¹¦ÄÜÁ¬½Ó·½Ê½£º(²»Ê¹ÓÃ´¥Ãþ¿É²»Á¬½Ó)
+  23          D_CLK-P1^2;  D_CS-P1^3;  D_DIN-P1^4;  D_OUT-P1^6;  D_PENIRQ-P1^7;
+  24          
+  25          SD¿¨½ÓÏß£»(²»Ê¹ÓÃ´¥Ãþ¿É²»Á¬½Ó)
+  26          SD_MISO-P31;  SD_SCK-P32;  SD_MOSI-P33;  SD_CS-P34;
+  27          */
+  28          
+  29          
+  30          //=============================================================
+  31          //¶¨ÒåSD¿¨ÐèÒªµÄ4¸ùÐÅºÅÏß
+  32          sbit SD_CLK = P3^2;
+  33          sbit SD_DI  = P3^3;
+  34          sbit SD_DO  = P3^1;
+  35          sbit SD_CS  = P3^4;
+  36          //===========================================================
+  37          //¶¨Òå512×Ö½Ú»º³åÇø£¬×¢ÒâÐèÒªÊ¹ÓÃ xdata¹Ø¼ü×Ö
+  38          unsigned char xdata DATA[512];
+  39          
+  40          //===========================================================
+  41          //Ð´Ò»×Ö½Úµ½SD¿¨,Ä£ÄâSPI×ÜÏß·½Ê½
+  42          void SdWrite(unsigned char n)
+  43          {
+  44   1      
+  45   1      unsigned char i;
+  46   1      
+  47   1      for(i=8;i;i--)
+  48   1      {
+  49   2      SD_CLK=0;
+  50   2      SD_DI=(n&0x80);
+  51   2      n<<=1;
+  52   2      SD_CLK=1;
+  53   2      }
+C51 COMPILER V7.06   SDTFT                                                                 05/27/2011 17:13:16 PAGE 2   
+
+  54   1      SD_DI=1; 
+  55   1      } 
+  56          //===========================================================
+  57          //´ÓSD¿¨¶ÁÒ»×Ö½Ú,Ä£ÄâSPI×ÜÏß·½Ê½
+  58          unsigned char SdRead()
+  59          {
+  60   1      unsigned char n,i;
+  61   1      for(i=8;i;i--)
+  62   1      {
+  63   2      SD_CLK=0;
+  64   2      SD_CLK=1;
+  65   2      n<<=1;
+  66   2      if(SD_DO) n|=1;
+  67   2      
+  68   2      }
+  69   1      return n;
+  70   1      }
+  71          //============================================================
+  72          //¼ì²âSD¿¨µÄÏìÓ¦
+  73          unsigned char SdResponse()
+  74          {
+  75   1      unsigned char i=0,response;
+  76   1      
+  77   1      while(i<=8)
+  78   1      {
+  79   2      response = SdRead();
+  80   2      if(response==0x00)
+  81   2      break;
+  82   2      if(response==0x01)
+  83   2      break;
+  84   2      i++;
+  85   2      }
+  86   1      return response;
+  87   1      } 
+  88          //================================================================
+  89          //·¢ÃüÁîµ½SD¿¨
+  90          void SdCommand(unsigned char command, unsigned long argument, unsigned char CRC)
+  91          {
+  92   1      
+  93   1      SdWrite(command|0x40);
+  94   1      SdWrite(((unsigned char *)&argument)[0]);
+  95   1      SdWrite(((unsigned char *)&argument)[1]);
+  96   1      SdWrite(((unsigned char *)&argument)[2]);
+  97   1      SdWrite(((unsigned char *)&argument)[3]);
+  98   1      SdWrite(CRC);
+  99   1      }
+ 100          //================================================================
+ 101          //³õÊ¼»¯SD¿¨
+ 102          unsigned char SdInit(void)
+ 103          {
+ 104   1      int delay=0, trials=0;
+ 105   1      unsigned char i;
+ 106   1      unsigned char response=0x01;
+ 107   1      
+ 108   1      SD_CS=1;
+ 109   1      for(i=0;i<=9;i++)
+ 110   1      SdWrite(0xff);
+ 111   1      SD_CS=0;
+ 112   1      
+ 113   1      //Send Command 0 to put MMC in SPI mode
+ 114   1      SdCommand(0x00,0,0x95);
+ 115   1      
+C51 COMPILER V7.06   SDTFT                                                                 05/27/2011 17:13:16 PAGE 3   
+
+ 116   1      
+ 117   1      response=SdResponse();
+ 118   1      
+ 119   1      if(response!=0x01)
+ 120   1      {
+ 121   2      return 0;
+ 122   2      } 
+ 123   1      
+ 124   1      while(response==0x01)
+ 125   1      {
+ 126   2      SD_CS=1;
+ 127   2      SdWrite(0xff);
+ 128   2      SD_CS=0;
+ 129   2      SdCommand(0x01,0x00ffc000,0xff);
+ 130   2      response=SdResponse();
+ 131   2      } 
+ 132   1      
+ 133   1      SD_CS=1;
+ 134   1      SdWrite(0xff);
+ 135   1      return 1; 
+ 136   1      }
+ 137          //================================================================
+ 138          //ÍùSD¿¨Ö¸¶¨µØÖ·Ð´Êý¾Ý,Ò»´Î×î¶à512×Ö½Ú
+ 139          unsigned char SdWriteBlock(unsigned char *Block, unsigned long address,int len)
+ 140          {
+ 141   1      unsigned int count;
+ 142   1      unsigned char dataResp;
+ 143   1      //Block size is 512 bytes exactly
+ 144   1      //First Lower SS
+ 145   1      
+ 146   1      SD_CS=0;
+ 147   1      //Then send write command
+ 148   1      SdCommand(0x18,address,0xff);
+ 149   1      
+ 150   1      if(SdResponse()==00)
+ 151   1      {
+ 152   2      SdWrite(0xff);
+ 153   2      SdWrite(0xff);
+ 154   2      SdWrite(0xff);
+ 155   2      //command was a success - now send data
+ 156   2      //start with DATA TOKEN = 0xFE
+ 157   2      SdWrite(0xfe);
+ 158   2      //now send data
+ 159   2      for(count=0;count<len;count++) SdWrite(*Block++);
+ 160   2      
+ 161   2      for(;count<512;count++) SdWrite(0);
+ 162   2      //data block sent - now send checksum
+ 163   2      SdWrite(0xff); //Á½×Ö½ÚCRCÐ£Ñé, Îª0XFFFF ±íÊ¾²»¿¼ÂÇCRC
+ 164   2      SdWrite(0xff);
+ 165   2      dataResp=SdRead();
+ 166   2      
+ 167   2      while(SdRead()==0);
+ 168   2      
+ 169   2      dataResp=dataResp&0x0f; //mask the high byte of the DATA RESPONSE token
+ 170   2      SD_CS=1;
+ 171   2      SdWrite(0xff);
+ 172   2      if(dataResp==0x0b)
+ 173   2      {
+ 174   3      return 0;
+ 175   3      }
+ 176   2      if(dataResp==0x05)
+ 177   2      return 1;
+C51 COMPILER V7.06   SDTFT                                                                 05/27/2011 17:13:16 PAGE 4   
+
+ 178   2      
+ 179   2      return 0;
+ 180   2      }
+ 181   1      return 0;
+ 182   1      }
+ 183          
+ 184          //=======================================================================
+ 185          //´ÓSD¿¨Ö¸¶¨µØÖ·¶ÁÈ¡Êý¾Ý,Ò»´Î×î¶à512×Ö½Ú
+ 186          unsigned char SdReadBlock(unsigned char *Block, unsigned long address,int len)
+ 187          {
+ 188   1      unsigned int count;
+ 189   1      //Block size is 512 bytes exactly
+ 190   1      //First Lower SS
+ 191   1      
+ 192   1       //printf("MMC_read_block\n");
+ 193   1      
+ 194   1      SD_CS=0;
+ 195   1      //Then send write command
+ 196   1      SdCommand(0x11,address,0xff);
+ 197   1      
+ 198   1      if(SdResponse()==00)
+ 199   1      {
+ 200   2      //command was a success - now send data
+ 201   2      //start with DATA TOKEN = 0xFE
+ 202   2      while(SdRead()!=0xfe);
+ 203   2      
+ 204   2      for(count=0;count<len;count++) *Block++=SdRead(); 
+ 205   2      
+ 206   2      for(;count<512;count++) SdRead();
+ 207   2      
+ 208   2      //data block sent - now send checksum
+ 209   2      SdRead();
+ 210   2      SdRead();
+ 211   2      //Now read in the DATA RESPONSE token
+ 212   2      SD_CS=1;
+ 213   2      SdRead();
+ 214   2      return 1;
+ 215   2      }
+ 216   1       //printf("Command 0x11 (Read) was not received by the MMC.\n");
+ 217   1      return 0;
+ 218   1      }
+ 219          
+ 220          //============================================================
+ 221          //Ö÷³ÌÐò        
+ 222          main()
+ 223          {
+ 224   1       unsigned int x,y; //¶¨ÒåÒº¾§ÆÁ×ø±ê
+ 225   1       unsigned long j;  //Ö´ÐÐÑ­»·ÐèÒªµÄÁÙÊ±±äÁ¿
+ 226   1        unsigned int i;
+ 227   1        unsigned long AddTemp=270336;//393728;//SD¿¨µØÖ·µÚÒ»¸öÊý¾ÝÎïÀíµØÖ·³õÊ¼Öµ£¬¿ÉÒÔÓÃwinhex²é¿´£¬ÕâÀïÊÇ512ÉÈÇ
+             -ø£¬512x512=262144£¬¸ù¾ÝÊµ¼ÊSD¿¨ÄÚÈÝ¸ü¸Ä
+ 228   1              CS=1;
+ 229   1              delayms(25);
+ 230   1              RES=0;
+ 231   1              delayms(150);
+ 232   1              RES=1;
+ 233   1              delayms(25);
+ 234   1              LGDP6522_init();//Òº¾§ÆÁ³õÊ¼»¯
+ 235   1              SdInit();         //SD¿¨³õÊ¼»¯
+ 236   1       while(1)
+ 237   1       {
+ 238   2      
+C51 COMPILER V7.06   SDTFT                                                                 05/27/2011 17:13:16 PAGE 5   
+
+ 239   2       for(j=0;j<300;j++)   //300±íÊ¾Ò»·ùÍ¼Æ¬º¬ÓÐ300x512×Ö½ÚµÄÐÅÏ¢
+ 240   2          {
+ 241   3          SdReadBlock(DATA,AddTemp+(j*512),512);//Ã¿´Î¶Á³ö512×Ö½Ú·Åµ½»º³åÇø
+ 242   3          for(i=0;i<256;i++)                    //È»ºóÐ´µ½Òº¾§ÆÁ£¬¿ÉÒÔÏÔÊ¾256¸öÏñËØ£¬Ã¿¸öÏñËØ16Î»¼´2¸ö×Ö½Ú
+ 243   3                 {   
+ 244   4                 LCD_SetPos(x,x,y,y);
+ 245   4                 Write_Data(DATA[2*i+1],DATA[2*i]);    
+ 246   4                 x++;
+ 247   4                 if(x==240)                         //¼ì²âÊÇ·ñÐ´µ½ÆÁµÄ±ßÔµ 240x320
+ 248   4                   {
+ 249   5                   y++;
+ 250   5                   x=0;
+ 251   5                   if(y==320)
+ 252   5                     y=0;
+ 253   5                   }
+ 254   4             }
+ 255   3           } 
+ 256   2           AddTemp = AddTemp+((j+0)*512);          //Ð´ÍêÒ»·ùÍ¼Æ¬ºó°ÑSDµØÖ·¼Ó300x512µ½ÏÂÒ»¸öÍ¼Æ¬µØÖ·
+ 257   2      delayms(1500);//µÈ´ý¼ÌÐøÖ´ÐÐÑ­»·ÏÔÊ¾ÏÂÒ»·ùÍ¼Æ¬
+ 258   2               
+ 259   2       } 
+ 260   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1500    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =    512    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      58
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

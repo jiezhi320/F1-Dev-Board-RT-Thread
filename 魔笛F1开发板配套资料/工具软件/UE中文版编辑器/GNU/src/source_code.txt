@@ -1,0 +1,56 @@
+Source code is available for:
+
+    aspell
+    astyle
+    ctags
+    libxml2
+    xmllint
+    libiconv
+
+from http://ftp.ultraedit.com/src or the UltraEdit\src directory of your
+UltraEdit CD(if purchased).
+
+
+The software packages listed above are available individually
+from their respective websites:
+
+Exuberant Ctags
+===============
+
+    Darren Hiebert   <dhiebert at users.sourceforge.net>
+    Project Page     http://ctags.sourceforge.net
+
+
+
+Artistic Style
+===============
+
+    Tal Davidson, Israel (E-mail:  davidsont@bigfoot.com)
+    Main home Page   http://astyle.sourceforge.net
+    Project Page     http://www.sourceforge.net/projects/astyle
+
+
+
+Aspell
+======
+
+    maintained by Kevin Atkinson (kevina@gnu.org)
+    http://aspell.net
+    http://aspell.net/win32/ - Windows Port
+
+
+libxml2 and xmllint
+===================
+
+    maintained by Daniel Veillard
+    Project Page http://xmlsoft.org
+    Downloads ftp://xmlsoft.org/libxml2/
+
+
+libiconv
+========
+
+    maintained by Free Software Foundation
+    Project Page http://www.gnu.org/software/libiconv/
+    Downloads http://ftp.gnu.org/pub/gnu/libiconv/
+

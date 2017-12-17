@@ -1,0 +1,154 @@
+
+Ordering SecureCRT®
+-------------------
+
+Upon receipt of payment, we will send you one license key for 
+each copy of SecureCRT paid for. The license key or keys will 
+be sent to you by e-mail or postal mail. All software and 
+software updates are available from www.vandyke.com. Because 
+the software is obtained by internet download, no disk media 
+will be mailed.
+
+Individual licenses for SecureCRT are $99.00 (U.S.). Four 
+payment methods are available.
+
+  1. Order online with a credit card.
+
+     To order online using a secure web server, go to:
+
+       http://www.vandyke.com/purchase/index.html
+
+
+  2. Order by mail with a check.
+
+     To order by mail, send the order form below along with a 
+     check to:
+
+       VanDyke Software, Inc.
+       4848 Tramway Ridge Dr. NE, Suite 101
+       Albuquerque, NM  87111
+       USA
+
+     Payment must be in U.S. dollars drawn on a U.S. bank. 
+
+
+  3. Order by phone with a credit card.
+
+     To order by phone, call VanDyke Software between 7:30 a.m. 
+     and 5:00 p.m. U.S. Mountain Time, Monday through Friday. 
+
+       Phone:  505-332-5710
+
+
+  4. Order by fax with a credit card.
+
+     You can fax the order form below to VanDyke Software.  Please
+     be sure to fill out the credit card information.
+
+       Fax:    505-332-5701
+
+Visa, MasterCard, American Express, and Discover are accepted.
+Please include the credit card number, cardholder name, 
+expiration date and billing address.
+
+
+Orders will be processed within one to two business days after
+they are received by VanDyke Software.  Most online orders are 
+processed in 15 minutes or less.
+
+
+Please direct any questions about order shipment status, refunds, 
+registration options, product details, technical support, volume 
+discounts, reseller pricing, site licenses, or non-credit card 
+orders to sales@vandyke.com, or write to VanDyke Software, Inc., 
+4848 Tramway Ridge Dr. NE, Suite 101, Albuquerque, NM 87111, USA.
+
+If you are a registered user of CRT, please visit our web site for 
+current upgrade pricing, or call 505-332-5710.
+
+                              ----
+
+Prices are subject to change. Please refer to http://www.vandyke.com
+for current pricing.
+
+                              ----
+
+                      SecureCRT Order Form
+                      --------------------
+
+         1 Computer        Computer License  @ $99.00      = ______
+
+  2 to   9 Computers: ____ Computer Licenses @ $95.00 each = ______
+
+ 10 to  24 Computers: ____ Computer Licenses @ $90.00 each = ______
+
+ 25 to  49 Computers: ____ Computer Licenses @ $85.00 each = ______
+
+ 50 to  99 Computers: ____ Computer Licenses @ $7s5.00 each = ______
+
+Quantities over 99, please send e-mail to:  sales@vandyke.com
+
+NEW MEXICO RESIDENTS ONLY: add 6.0625% sales tax         + ________
+
+                                      Total Payment        ________
+
+  - Payments must be in U.S. dollars drawn on a U.S. bank.
+  - Prices are based on the number of computers on which the 
+    software is installed.
+  - Prices are in U.S. dollars.
+
+                      --- Please Print ---
+
+This Software is subject to export control and may be transmitted, 
+exported, or re-exported only under applicable export laws and 
+restrictions and regulations of the United States Bureau of 
+Industry and Security or foreign agencies or authorities. 
+
+Please answer this question.
+
+[ ]Yes  [ ]No  Do you acknowledge affirmatively that you understand
+               that the requested software is subject to export
+               controls under the Export Administration Act and 
+               that you may only export or re-export the software 
+               under the laws, restrictions and regulations of the  
+               U.S. Bureau of Industry and Security or foreign 
+               agencies or authorities?
+
+
+Name: ______________________________________ Date: ________________
+
+Company: __________________________________________________________
+
+Address: __________________________________________________________
+
+City, State, Zip: _________________________________________________
+
+Country: ______________________ Phone Number: _____________________
+
+E-Mail Address: ___________________________________________________
+
+Would you like to receive update announcements by e-mail? _________
+
+How did you hear about SecureCRT? _________________________________
+
+Comments: _________________________________________________________
+
+          _________________________________________________________
+
+
+Credit Card Orders Only:
+
+Name On Credit Card: ______________________________________________
+
+Credit Card Number: _______________________________________________
+
+Expiration Date: __________________________________________________
+
+Credit Card Billing Address: ______________________________________
+
+___________________________________________________________________
+
+Signature: ________________________________________________________
+
+VanDyke Software and SecureCRT are trademarks of VanDyke Software, 
+Inc. in the United States and other countries.

@@ -1,0 +1,219 @@
+body{
+	font-size: 52.5%; 
+	font-family: Verdana, Arial, Sans-Serif;
+	background-color: #cfcfcf;
+	color: #474747;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+} 
+
+/*page attributes*/
+
+#page {
+	background-color: #fff;
+	margin: 10px auto;
+	padding: 0;
+	width: 746px;
+	text-align: left;
+	border: 1px solid #8a8a8a;
+	}
+
+/*end page attributes*/
+
+
+/*header attributes*/
+
+#header {
+	background: url("images/header.gif") no-repeat top center;
+	margin: 0 !important;
+	margin: 0 0 0 1px;
+	padding: 1px;
+	height: 150px;
+	width: 740px;
+}
+	
+			
+/*end header attributes*/
+	
+/*sidebar attributes*/
+#sidebar
+{
+	padding: 0px 20px 10px 0;
+	margin-top: -50px;
+	margin-left: 40px;
+	width: 180px;
+	font-size: 1.1em;
+	text-decoration: none;
+	}
+
+#sidebar a {
+	text-decoration: none;
+	color: #293897;
+	}
+
+#sidebar a:hover {
+	text-decoration: underline;
+	color: #BC950E;
+	}
+
+#sidebar ul {
+	margin-top: 0px;
+	padding: 0;
+	}
+
+#sidebar ul li {
+	list-style-type: none;
+	list-style-image: none;
+	margin-bottom: 3px;
+	padding-left: 45px !important; /* for most browsers */
+  padding-left /**/:5px; /* for IE5.5's bad box model */
+	}
+	
+#sidebar h3.ue3 {
+  margin-bottom: -5px;
+  }	
+
+/*end sidebar attributes*/
+
+/*content attributes*/
+
+.content {
+	float: right;
+	padding: 0 50px 20px 0px;
+	margin: -35px 0 0 0;
+	width: 420px !important;
+  width/* */:/**/467px; 
+  width: /**/467px;
+	font-size: 1.2em;
+	line-height: 1.4em;
+	}
+	
+.feat_window {
+ overflow: auto;
+ height: 150px !important;
+ height/* */:/**/140px; 
+ height: /**/140px;
+ scrollbar-face-color:#DEDEDE;
+ scrollbar-base-color:#F5F5F5;
+ scrollbar-arrow-color:black;
+ scrollbar-track-color:#F5F5F5;
+ scrollbar-shadow-color:#EBF5FF;
+ scrollbar-highlight-color:#F5F5F5;
+ scrollbar-3dlight-color:#C3C3C3;
+ scrollbar-darkshadow-Color:#9D9D9D;
+ }
+		
+/*end content attributes*/
+
+/*footer attributes*/
+			
+#footer {
+	background: url("images/footer.gif") no-repeat top; 
+	padding: 30px 10px 0 10px;
+	margin: 0 auto;
+	width: 720px;
+	clear: both;
+	font-size: 1.1em;
+}
+
+#footer p {
+	margin: 0;
+	padding: 5px 60px;
+	text-align: center;
+	}
+	
+/*end footer attributes*/
+
+/*General Formatting elements*/
+
+h1, h2, h3 {
+	font-family: Arial, Verdana, Sans-Serif;
+	font-weight: bold;
+	}
+
+h1 {
+	font-size: 1.8em;
+	margin: 0;
+	font-weight: normal;
+	color: #333;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom: solid #333 1px;
+	}
+
+h2 {
+	font-size: 1.6em;
+	color: #333;
+	}
+	
+h2.companion {	
+	padding-bottom: 3px;
+	padding-top: 10px;
+	border-bottom: solid #333 1px;	
+	}
+
+h3 {
+	font-size: 1.5em;
+	margin: 20px 0 0 0;
+	color: #333;
+	}
+	
+h3.ues {
+	background: url("images/ues_icon.gif") no-repeat top left;
+	padding-left: 35px;
+	margin-bottom: 0px;
+	vertical-align: bottom;
+	height: 25px;
+  padding-top: 3px !important; /* for most browsers */
+  padding-top /**/:1px; /* for IE5.5's bad box model */
+  }	
+  
+h3.uc {
+	background: url("images/uc_icon.gif") no-repeat top left;
+	padding-left: 35px;
+	margin-bottom: 0px;
+	vertical-align: bottom;
+	height: 25px;
+  padding-top: 5px !important; /* for most browsers */
+  padding-top /**/:4px; /* for IE5.5's bad box model */
+  }	  
+  
+h3.us {
+	background: url("images/us_icon.gif") no-repeat top left;
+	padding-left: 35px;
+	margin-bottom: 0px;
+	vertical-align: bottom;
+	height: 25px;
+  padding-top: 5px !important; /* for most browsers */
+  padding-top /**/:4px; /* for IE5.5's bad box model */
+  }
+  
+h3.ue {
+	background: url("images/ue_icon.gif") no-repeat top left;
+	padding-left: 35px;
+	margin-bottom: 0px;
+	vertical-align: bottom;
+	height: 25px;
+  padding-top: 5px !important; /* for most browsers */
+  padding-top /**/:4px; /* for IE5.5's bad box model */
+  }
+  
+h3.ue3 {
+	background: url("images/ue3_icon.gif") no-repeat top left;
+	padding-left: 35px;
+	margin-bottom: 0px;
+	vertical-align: bottom;
+	height: 32px;
+  padding-top: 8px !important; /* for most browsers */
+  padding-top /**/:7px; /* for IE5.5's bad box model */
+  }    
+
+a:hover {
+	color: #147;
+	text-decoration: underline;
+	}
+
+/*end General Formatting elements*/
+
+

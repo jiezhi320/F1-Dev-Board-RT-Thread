@@ -1,0 +1,225 @@
+C51 COMPILER V9.00   TEXT1                                                                 04/07/2010 02:58:34 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE TEXT1
+OBJECT MODULE PLACED IN Text1.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Text1.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          sbit LCD_RS = P3^5;   //数据/命令切换
+   3          sbit LCD_REST = P1^2;         //复位 
+   4          sbit LCD_WR = P3^6;               //写控制
+   5          sbit LCD_RD =P3^7;                //读控制
+   6          sbit LCD_CS=P1^0;               
+   7           
+   8          void delayms(int count)  // /* X1ms */
+   9          {
+  10   1              int i,j;
+  11   1              for(i=0;i<count;i++)
+  12   1                      for(j=0;j<100;j++);
+  13   1      }
+  14            
+  15          
+  16          void main_Write_COM( int  DH)    //命令
+  17          {       
+  18   1          LCD_RS=0;
+  19   1              LCD_CS =0;       
+  20   1              P2=DH>>8;       
+  21   1              P0=DH;          
+  22   1              LCD_WR=0;
+  23   1              LCD_WR=1;
+  24   1              LCD_CS =1;      
+  25   1      }
+  26          void main_Write_DATA(int DH)    //数据  
+  27          {
+  28   1          LCD_RS=1;
+  29   1              LCD_CS =0;                                      
+  30   1              P2=DH>>8;       
+  31   1              P0=DH;                                  
+  32   1              LCD_WR=0;
+  33   1              LCD_WR=1;
+  34   1              LCD_CS =1;      
+  35   1      }
+  36          
+  37          
+  38          void main_W_com_data( int com1,dat1)    //命令数据一起 
+  39          {
+  40   1         main_Write_COM(com1);
+  41   1         main_Write_DATA(dat1);
+  42   1      }
+  43          
+  44          
+  45          
+  46          void address_set(unsigned int x1,unsigned int y1,unsigned int x2,unsigned int y2)
+  47          {
+  48   1              main_W_com_data(0x0002,x1>>8);     // Column address start2
+  49   1              main_W_com_data(0x0003,x1);        // Column address start1
+  50   1              main_W_com_data(0x0004,x2>>8);     // Column address end2
+  51   1              main_W_com_data(0x0005,x2);        // Column address end1
+  52   1              main_W_com_data(0x0006,y1>>8);     // Row address start2
+  53   1              main_W_com_data(0x0007,y1);        // Row address start1
+  54   1          main_W_com_data(0x0008,y2>>8);         // Row address end2
+  55   1              main_W_com_data(0x0009,y2);        // Row address end1
+C51 COMPILER V9.00   TEXT1                                                                 04/07/2010 02:58:34 PAGE 2   
+
+  56   1          main_Write_COM(0x0022);              
+  57   1      
+  58   1      }       
+  59          void main_init(void)
+  60          {
+  61   1      
+  62   1          LCD_REST=1;
+  63   1          delayms(5); 
+  64   1              LCD_REST=0;
+  65   1              delayms(10);
+  66   1              LCD_REST=1;
+  67   1              delayms(20);
+  68   1      
+  69   1                 //  VENDOR   
+  70   1              main_W_com_data(0x0046,0x00A4);
+  71   1              main_W_com_data(0x0047,0x0053);
+  72   1              main_W_com_data(0x0048,0x0000);
+  73   1              main_W_com_data(0x0049,0x0044);
+  74   1              main_W_com_data(0x004a,0x0004);
+  75   1              main_W_com_data(0x004b,0x0067);
+  76   1              main_W_com_data(0x004c,0x0033);
+  77   1              main_W_com_data(0x004d,0x0077);
+  78   1              main_W_com_data(0x004e,0x0012);
+  79   1              main_W_com_data(0x004f,0x004C);
+  80   1              main_W_com_data(0x0050,0x0046);
+  81   1              main_W_com_data(0x0051,0x0044);
+  82   1                
+  83   1                //240x320 window setting
+  84   1          main_W_com_data(0x0002,0x0000); // Column address start2
+  85   1              main_W_com_data(0x0003,0x0000); // Column address start1
+  86   1              main_W_com_data(0x0004,0x0000); // Column address end2
+  87   1              main_W_com_data(0x0005,0x00ef); // Column address end1
+  88   1          main_W_com_data(0x0006,0x0000); // Row address start2
+  89   1              main_W_com_data(0x0007,0x0000); // Row address start1
+  90   1              main_W_com_data(0x0008,0x0001); // Row address end2
+  91   1              main_W_com_data(0x0009,0x003f); // Row address end1
+  92   1        
+  93   1        // Display Setting
+  94   1              main_W_com_data(0x0001,0x0006); // IDMON=0, INVON=1, NORON=1, PTLON=0
+  95   1              main_W_com_data(0x0016,0x00C8); // MY=0, MX=0, MV=0, ML=1, BGR=0, TEON=0   0048
+  96   1              main_W_com_data(0x0023,0x0095); // N_DC=1001 0101
+  97   1              main_W_com_data(0x0024,0x0095); // PI_DC=1001 0101
+  98   1              main_W_com_data(0x0025,0x00FF); // I_DC=1111 1111
+  99   1              
+ 100   1              main_W_com_data(0x0027,0x0002); // N_BP=0000 0010
+ 101   1              main_W_com_data(0x0028,0x0002); // N_FP=0000 0010
+ 102   1              main_W_com_data(0x0029,0x0002); // PI_BP=0000 0010
+ 103   1              main_W_com_data(0x002a,0x0002); // PI_FP=0000 0010
+ 104   1              main_W_com_data(0x002C,0x0002); // I_BP=0000 0010
+ 105   1              main_W_com_data(0x002d,0x0002); // I_FP=0000 0010
+ 106   1              
+ 107   1              main_W_com_data(0x003a,0x0001); // N_RTN=0000, N_NW=001    0001
+ 108   1              main_W_com_data(0x003b,0x0000); // P_RTN=0000, P_NW=001
+ 109   1              main_W_com_data(0x003c,0x00f0); // I_RTN=1111, I_NW=000
+ 110   1              main_W_com_data(0x003d,0x0000); // DIV=00
+ 111   1              delayms(1);
+ 112   1              main_W_com_data(0x0035,0x0038); // EQS=38h
+ 113   1              main_W_com_data(0x0036,0x0078); // EQP=78h
+ 114   1              main_W_com_data(0x003E,0x0038); // SON=38h
+ 115   1              main_W_com_data(0x0040,0x000F); // GDON=0Fh
+ 116   1              main_W_com_data(0x0041,0x00F0); // GDOFF
+ 117   1              
+C51 COMPILER V9.00   TEXT1                                                                 04/07/2010 02:58:34 PAGE 3   
+
+ 118   1              // Power Supply Setting
+ 119   1              main_W_com_data(0x0019,0x0049); // CADJ=0100, CUADJ=100, OSD_EN=1 ,60Hz
+ 120   1              main_W_com_data(0x0093,0x000F); // RADJ=1111, 100%
+ 121   1              delayms(1);
+ 122   1              main_W_com_data(0x0020,0x0040); // BT=0100
+ 123   1              main_W_com_data(0x001D,0x0007); // VC1=111   0007
+ 124   1              main_W_com_data(0x001E,0x0000); // VC3=000
+ 125   1              main_W_com_data(0x001F,0x0004); // VRH=0011
+ 126   1              
+ 127   1              //VCOM SETTING
+ 128   1              main_W_com_data(0x0044,0x004D); // VCM=101 0000  4D
+ 129   1              main_W_com_data(0x0045,0x000E); // VDV=1 0001   0011
+ 130   1              delayms(1);
+ 131   1              main_W_com_data(0x001C,0x0004); // AP=100
+ 132   1              delayms(2);
+ 133   1              
+ 134   1              main_W_com_data(0x001B,0x0018); // GASENB=0, PON=0, DK=1, XDK=0, VLCD_TRI=0, STB=0
+ 135   1              delayms(1);
+ 136   1              main_W_com_data(0x001B,0x0010); // GASENB=0, PON=1, DK=0, XDK=0, VLCD_TRI=0, STB=0
+ 137   1              delayms(1);
+ 138   1              main_W_com_data(0x0043,0x0080); //set VCOMG=1
+ 139   1              delayms(2);
+ 140   1              
+ 141   1              // Display ON Setting
+ 142   1              main_W_com_data(0x0090,0x007F); // SAP=0111 1111
+ 143   1              main_W_com_data(0x0026,0x0004); //GON=0, DTE=0, D=01
+ 144   1              delayms(1);
+ 145   1              main_W_com_data(0x0026,0x0024); //GON=1, DTE=0, D=01
+ 146   1              main_W_com_data(0x0026,0x002C); //GON=1, DTE=0, D=11
+ 147   1              delayms(1);
+ 148   1              main_W_com_data(0x0026,0x003C); //GON=1, DTE=1, D=11
+ 149   1              
+ 150   1              // INTERNAL REGISTER SETTING
+ 151   1              main_W_com_data(0x0057,0x0002); // TEST_Mode=1: into TEST mode
+ 152   1              main_W_com_data(0x0095,0x0001); // SET DISPLAY CLOCK AND PUMPING CLOCK TO SYNCHRONIZE
+ 153   1              main_W_com_data(0x0057,0x0000); // TEST_Mode=0: exit TEST mode
+ 154   1              //main_W_com_data(0x0021,0x0000);
+ 155   1              main_Write_COM(0x0022);  
+ 156   1      
+ 157   1      }
+ 158          
+ 159          
+ 160          void Pant(unsigned int color)
+ 161          {
+ 162   1              int i,j;
+ 163   1              address_set(0,0,239,319);
+ 164   1      
+ 165   1          for(i=0;i<320;i++)
+ 166   1               {
+ 167   2                for (j=0;j<240;j++)
+ 168   2                      {
+ 169   3               main_Write_DATA(color);
+ 170   3                  }
+ 171   2      
+ 172   2                }             
+ 173   1      }
+ 174          
+ 175          main()
+ 176          {
+ 177   1              main_init();   //tft初始化       
+ 178   1      
+ 179   1              while(1)
+C51 COMPILER V9.00   TEXT1                                                                 04/07/2010 02:58:34 PAGE 4   
+
+ 180   1              { 
+ 181   2              Pant(0xf800); //红色
+ 182   2              delayms(1000);
+ 183   2              Pant(0X07E0); //绿色
+ 184   2              delayms(1000);
+ 185   2              Pant(0x001f); //蓝色  
+ 186   2              delayms(1000);
+ 187   2          }
+ 188   1      
+ 189   1      
+ 190   1      
+ 191   1      }
+ 192          
+ 193          
+ 194          
+ 195          
+ 196          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    961    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

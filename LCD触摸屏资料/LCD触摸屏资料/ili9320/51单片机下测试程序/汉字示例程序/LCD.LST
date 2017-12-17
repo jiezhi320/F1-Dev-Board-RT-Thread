@@ -1,0 +1,368 @@
+C51 COMPILER V7.50   LCD                                                                   07/13/2012 17:36:29 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN LCD.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LCD.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg51.h>
+   2          
+   3          
+   4          /* LCD color */
+   5          #define White          0xFFFF
+   6          #define Black          0x0000
+   7          #define Blue           0x001F
+   8          #define Blue2          0x051F
+   9          #define Red            0xF800
+  10          #define Magenta        0xF81F
+  11          #define Green          0x07E0
+  12          #define Cyan           0x7FFF
+  13          #define Yellow         0xFFE0
+  14          
+  15          
+  16          #define  LCD_DataPortH P2     //高8位数据口,8位模式下只使用高8位 
+  17          #define  LCD_DataPortL P0     //低8位数据口     ,8位模式下低8位可以不接线,请确认P0口已经上拉10K电阻,不宜太小，
+             -最小4.7K,推荐10K.
+  18          sbit LCD_RS = P3^5;              //数据/命令切换
+  19          sbit LCD_WR = P3^6;               //写控制
+  20          sbit LCD_RD =P3^7;                   //读控制
+  21          sbit LCD_CS=P1^0;               //片选  
+  22          sbit LCD_REST = P1^2;         //复位   
+  23          
+  24          
+  25          void delayms(int count)  // /* X1ms */
+  26          {
+  27   1              int i,j;
+  28   1              for(i=0;i<count;i++)
+  29   1                      for(j=0;j<1000;j++);
+  30   1      }
+  31          
+  32          
+  33          void main_Write_COM( int  DH)    //命令
+  34          {       
+  35   1          LCD_RS=0;
+  36   1              LCD_CS =0;       
+  37   1              P2=DH>>8;       
+  38   1              P0=DH;          
+  39   1              LCD_WR=0;
+  40   1              LCD_WR=1;
+  41   1              LCD_CS =1;      
+  42   1      }
+  43          void cld_write_color(char hh,char ll)   //发送颜色数据为提高速度高8位低8位分别传递      
+  44          {
+  45   1          LCD_RS=1;
+  46   1              LCD_CS =0;                                      
+  47   1              P2=hh;  
+  48   1              P0=ll;                                  
+  49   1              LCD_WR=0;
+  50   1              LCD_WR=1;
+  51   1              LCD_CS =1;      
+  52   1      }
+  53          void  Write_Data_U16(unsigned int y)
+  54          {
+C51 COMPILER V7.50   LCD                                                                   07/13/2012 17:36:29 PAGE 2   
+
+  55   1              unsigned char m,n;
+  56   1              m=y>>8;
+  57   1              n=y;
+  58   1              cld_write_color(m,n);
+  59   1      
+  60   1      }
+  61          void main_Write_DATA(int DH)    //数据  
+  62          {
+  63   1          LCD_RS=1;
+  64   1              LCD_CS =0;                                      
+  65   1              P2=DH>>8;       
+  66   1              P0=DH;                                  
+  67   1              LCD_WR=0;
+  68   1              LCD_WR=1;
+  69   1              LCD_CS =1;      
+  70   1      }
+  71          
+  72          
+  73          void main_W_com_data( int com1,dat1)    //命令数据一起 
+  74          {
+  75   1         main_Write_COM(com1);
+  76   1         main_Write_DATA(dat1);
+  77   1      }
+  78          
+  79          void LCD_SetPos(unsigned int x1,unsigned int x2,unsigned int y1,unsigned int y2)
+  80          {
+  81   1              main_Write_COM(0x0020);main_Write_DATA(x1);       //设置X坐标位置
+  82   1          main_Write_COM(0x0021);main_Write_DATA(y1);   //设置Y坐标位置
+  83   1          main_Write_COM(0x0050);main_Write_DATA(x1);   //开始X
+  84   1              main_Write_COM(0x0052);main_Write_DATA(y1);       //开始Y
+  85   1          main_Write_COM(0x0051);main_Write_DATA(x2);   //结束X
+  86   1              main_Write_COM(0x0053);main_Write_DATA(y2);   //结束Y
+  87   1          main_Write_COM(0x0022);                                                      
+  88   1      }
+  89          
+  90          void Lcd_Init(void)
+  91          {
+  92   1      
+  93   1          LCD_REST=1;
+  94   1          delayms(5); 
+  95   1              LCD_REST=0;
+  96   1              delayms(5);
+  97   1              LCD_REST=1;
+  98   1              LCD_CS=1;
+  99   1              LCD_RD=1;
+ 100   1              LCD_WR=1;
+ 101   1              delayms(5);
+ 102   1              
+ 103   1      
+ 104   1              LCD_CS =0;  //打开片选使能
+ 105   1              //************* Start Initial Sequence **********//
+ 106   1       main_W_com_data(0x00e5, 0x8000);       
+ 107   1                      main_W_com_data(0x0000, 0x0001);        
+ 108   1                      main_W_com_data(0x0001, 0x0100);
+ 109   1                      main_W_com_data(0x0002, 0x0700);
+ 110   1                      main_W_com_data(0x0003, 0x1030);
+ 111   1                      main_W_com_data(0x0004, 0x0000);
+ 112   1                      main_W_com_data(0x0008, 0x0202);        
+ 113   1                      main_W_com_data(0x0009, 0x0000);        
+ 114   1                      main_W_com_data(0x000A, 0x0000);
+ 115   1                      main_W_com_data(0x000C, 0x0000);        
+ 116   1                      main_W_com_data(0x000D, 0x0000);        
+C51 COMPILER V7.50   LCD                                                                   07/13/2012 17:36:29 PAGE 3   
+
+ 117   1                      main_W_com_data(0x000F, 0x0000);        
+ 118   1              //-----Power On sequence----------------------- 
+ 119   1                      main_W_com_data(0x0010, 0x0000);        
+ 120   1                      main_W_com_data(0x0011, 0x0007);        
+ 121   1                      main_W_com_data(0x0012, 0x0000);        
+ 122   1                      main_W_com_data(0x0013, 0x0000);        
+ 123   1                      delayms(150);
+ 124   1                      main_W_com_data(0x0010, 0x17B0);        
+ 125   1                      main_W_com_data(0x0011, 0x0007);        
+ 126   1                      delayms(50);
+ 127   1                      main_W_com_data(0x0012, 0x013A);        
+ 128   1                      delayms(50);
+ 129   1                      main_W_com_data(0x0013, 0x1A00);        
+ 130   1                      main_W_com_data(0x0029, 0x000c);                
+ 131   1                      delayms(50);
+ 132   1              //-----Gamma control-----------------------     
+ 133   1                      main_W_com_data(0x0030, 0x0000);        
+ 134   1                      main_W_com_data(0x0031, 0x0505);        
+ 135   1                      main_W_com_data(0x0032, 0x0004);        
+ 136   1                      main_W_com_data(0x0035, 0x0006);        
+ 137   1                      main_W_com_data(0x0036, 0x0707);        
+ 138   1                      main_W_com_data(0x0037, 0x0105);        
+ 139   1                      main_W_com_data(0x0038, 0x0002);        
+ 140   1                      main_W_com_data(0x0039, 0x0707);        
+ 141   1                      main_W_com_data(0x003C, 0x0704);        
+ 142   1                      main_W_com_data(0x003D, 0x0807);        
+ 143   1              //-----Set RAM area-----------------------      
+ 144   1                      main_W_com_data(0x0050, 0x0000);
+ 145   1                      main_W_com_data(0x0051, 0x00EF);
+ 146   1                      main_W_com_data(0x0052, 0x0000);
+ 147   1                      main_W_com_data(0x0053, 0x013F);
+ 148   1                      main_W_com_data(0x0060, 0x2700);
+ 149   1                      main_W_com_data(0x0061, 0x0001);
+ 150   1                      main_W_com_data(0x006A, 0x0000);
+ 151   1                      main_W_com_data(0x0021, 0x0000);        
+ 152   1                      main_W_com_data(0x0020, 0x0000);        
+ 153   1              //-----Partial Display Control------------      
+ 154   1                      main_W_com_data(0x0080, 0x0000);        
+ 155   1                      main_W_com_data(0x0081, 0x0000);
+ 156   1                      main_W_com_data(0x0082, 0x0000);
+ 157   1                      main_W_com_data(0x0083, 0x0000);
+ 158   1                      main_W_com_data(0x0084, 0x0000);        
+ 159   1                      main_W_com_data(0x0085, 0x0000);
+ 160   1              //-----Panel Control----------------------
+ 161   1                      main_W_com_data(0x0090, 0x0010);        
+ 162   1                      main_W_com_data(0x0092, 0x0000);
+ 163   1                      main_W_com_data(0x0093, 0x0003);
+ 164   1                      main_W_com_data(0x0095, 0x0110);
+ 165   1                      main_W_com_data(0x0097, 0x0000);        
+ 166   1                      main_W_com_data(0x0098, 0x0000);
+ 167   1              //-----Display on-----------------------        
+ 168   1                      main_W_com_data(0x0007, 0x0173);        
+ 169   1                      delayms(50);
+ 170   1                       main_Write_COM(0x0022);        
+ 171   1      
+ 172   1              LCD_CS =1;  //关闭片选使能
+ 173   1      
+ 174   1      }
+ 175          
+ 176          /////////////////////////////////////////////////////////////
+ 177          #include "8X16.h"
+ 178          void LCD_PutChar8x16(unsigned short x, unsigned short y, char c, unsigned int fColor, unsigned int bColor)
+C51 COMPILER V7.50   LCD                                                                   07/13/2012 17:36:29 PAGE 4   
+
+ 179          {
+ 180   1       unsigned int i,j;
+ 181   1       LCD_SetPos(x,x+8-1,y,y+16-1);
+ 182   1       for(i=0; i<16;i++) {
+ 183   2                      unsigned char m=Font8x16[c*16+i];
+ 184   2                      for(j=0;j<8;j++) {
+ 185   3                              if((m&0x80)==0x80) {
+ 186   4                                      Write_Data_U16(fColor);
+ 187   4                                      }
+ 188   3                              else {
+ 189   4                                      Write_Data_U16(bColor);
+ 190   4                                      }
+ 191   3                              m<<=1;
+ 192   3                              }
+ 193   2                      }
+ 194   1      }
+ 195          
+ 196          
+ 197          void LCD_PutChar(unsigned short x, unsigned short y, char c, unsigned int fColor, unsigned int bColor) {
+ 198   1      
+ 199   1                      LCD_PutChar8x16( x, y, c, fColor, bColor );
+ 200   1              }
+ 201          
+ 202          
+ 203          #include "GB1616.h"     //16*16汉字字模
+ 204          
+ 205          void PutGB1616(unsigned short x, unsigned short  y, unsigned char c[2], unsigned int fColor,unsigned int b
+             -Color){
+ 206   1              unsigned int i,j,k;
+ 207   1      
+ 208   1              LCD_SetPos(x,  x+16-1,y, y+16-1);
+ 209   1      
+ 210   1              for (k=0;k<64;k++) { //64标示自建汉字库中的个数，循环查询内码
+ 211   2                if ((codeGB_16[k].Index[0]==c[0])&&(codeGB_16[k].Index[1]==c[1])){ 
+ 212   3              for(i=0;i<32;i++) {
+ 213   4                        unsigned short m=codeGB_16[k].Msk[i];
+ 214   4                        for(j=0;j<8;j++) {
+ 215   5                              if((m&0x80)==0x80) {
+ 216   6                                      Write_Data_U16(fColor);
+ 217   6                                      }
+ 218   5                              else {
+ 219   6                                      Write_Data_U16(bColor);
+ 220   6                                      }
+ 221   5                              m<<=1;
+ 222   5                              } 
+ 223   4                        }
+ 224   3                      }  
+ 225   2                }     
+ 226   1              }
+ 227          
+ 228                  #include "GB3232.h"     //32*32汉字字模
+ 229          
+ 230          void PutGB3232(unsigned short x, unsigned short  y, unsigned char c[2], unsigned int fColor,unsigned int b
+             -Color){
+ 231   1              unsigned int i,j,k;
+ 232   1      
+ 233   1              LCD_SetPos(x,  x+32-1,y, y+32-1);
+ 234   1      
+ 235   1              for (k=0;k<15;k++) { //15标示自建汉字库中的个数，循环查询内码
+ 236   2                if ((codeGB_32[k].Index[0]==c[0])&&(codeGB_32[k].Index[1]==c[1])){ 
+ 237   3              for(i=0;i<128;i++) {
+ 238   4                        unsigned short m=codeGB_32[k].Msk[i];
+C51 COMPILER V7.50   LCD                                                                   07/13/2012 17:36:29 PAGE 5   
+
+ 239   4                        for(j=0;j<8;j++) {
+ 240   5                              if((m&0x80)==0x80) {
+ 241   6                                      Write_Data_U16(fColor);
+ 242   6                                      }
+ 243   5                              else {
+ 244   6                                      Write_Data_U16(bColor);
+ 245   6                                      }
+ 246   5                              m<<=1;
+ 247   5                              } 
+ 248   4                        }
+ 249   3                      }  
+ 250   2                }     
+ 251   1              }
+ 252          
+ 253          void LCD_PutString(unsigned short x, unsigned short y, unsigned char *s, unsigned int fColor, unsigned int
+             - bColor) {
+ 254   1               unsigned char l=0;
+ 255   1              while(*s) {
+ 256   2                      if( *s < 0x80) 
+ 257   2                          {
+ 258   3                              LCD_PutChar(x+l*8,y,*s,fColor,bColor);
+ 259   3                              s++;l++;
+ 260   3                              }
+ 261   2                      else
+ 262   2                          {
+ 263   3                              PutGB1616(x+l*8,y,(unsigned char*)s,fColor,bColor);
+ 264   3                              s+=2;l+=2;
+ 265   3                              }
+ 266   2                      }
+ 267   1              }
+ 268          
+ 269          
+ 270          void Pant(unsigned int color)
+ 271          {
+ 272   1              int i,j;
+ 273   1      
+ 274   1      
+ 275   1          for(i=0;i<320;i++)
+ 276   1               {
+ 277   2                for (j=0;j<240;j++)
+ 278   2                      {
+ 279   3               main_Write_DATA(color);
+ 280   3                  }
+ 281   2      
+ 282   2                }             
+ 283   1      }
+ 284          
+ 285          main()
+ 286          {
+ 287   1      
+ 288   1              Lcd_Init();          //TFT初始化
+ 289   1                      while(1)
+ 290   1              { 
+ 291   2              Pant(0xffff);    //TFT清屏
+ 292   2      
+ 293   2      LCD_PutString(40,60,"I LOVE MY JOB ",Blue2,Yellow);
+ 294   2      
+ 295   2      LCD_PutString(40,100,"专业技术支持论坛",0x07e0,0xf800);
+ 296   2      LCD_PutString(40,120,"专业开发板工控板",0xF800,Yellow);
+ 297   2      LCD_PutString(40,140,"1234567890",0xF800,Yellow);
+ 298   2      LCD_PutString(20,160,"abcdefghijklmnopqistuvwxyz",0xF800,Yellow);
+ 299   2      LCD_PutString(20,180,"`,./<>';:[]{}\|?)(-=+*&^%$",0xF800,Yellow);
+C51 COMPILER V7.50   LCD                                                                   07/13/2012 17:36:29 PAGE 6   
+
+ 300   2      PutGB3232(20,200,"我",Blue,Yellow);     //写入32x32汉字
+ 301   2      PutGB3232(60,200,"爱",Blue,Red);
+ 302   2      PutGB3232(100,200,"单",Blue,Magenta);
+ 303   2      PutGB3232(140,200,"片",Blue,Green);
+ 304   2      PutGB3232(180,200,"机",Blue,Cyan);      
+ 305   2      PutGB3232(20,240,"闪",Blue,0X00);       
+ 306   2      PutGB3232(60,240,"耀",Blue,0X00);       
+ 307   2      PutGB3232(100,240,"电",Blue,0X00);      
+ 308   2      PutGB3232(140,240,"子",Blue,0X00);      
+ 309   2      PutGB3232(180,240,"科",Blue,0X00);
+ 310   2      PutGB3232(20,280,"技",Blue,0X00);               
+ 311   2      PutGB3232(60,280,"欢",Blue,0X00);       
+ 312   2      PutGB3232(100,280,"迎",Blue,0X00);      
+ 313   2      PutGB3232(140,280,"你",Blue,0X00);      
+ 314   2      PutGB3232(180,280,"！",Blue,0X00);      
+ 315   2              delayms(500);
+ 316   2      }
+ 317   1      
+ 318   1      }
+ 319          
+ 320          
+ 321          
+ 322          
+ 323          
+ 324          
+ 325          
+ 326          
+ 327          
+ 328          
+ 329          
+ 330          
+ 331          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   2084    ----
+   CONSTANT SIZE    =   5046    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      71
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

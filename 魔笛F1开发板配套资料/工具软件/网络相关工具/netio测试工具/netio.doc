@@ -1,0 +1,48 @@
+NETIO - Network Benchmark, Version 1.32
+(C) 1997-2012 Kai Uwe Rommel
+
+This is a network benchmark for OS/2 2.x, Windows, Linux and Unix.
+It measures the net throughput of a network via TCP and UDP
+protocols using various different packet sizes.
+
+One instance has to run on one machine as a server process, another 
+instance is used on another machine to perform the benchmark. When 
+executed without arguments, the program will explain its usage.
+
+Full source code is included. For compilation, IBM C/C++ for OS/2 
+or gcc (mingw) for Windows is required, gcc can be used under Unix.
+
+Starting with version 1.20, multi threading support is required.
+Under Unix this has to be pthreads (tested with Linux). Therefore,
+DOS is no longer supported beginning with version 1.20.
+
+A few executable files are included. The author can only build for OS/2, 
+Windows, Linux and AIX. The other executable files (if any) are
+contributions from other people who ported the benchmark to their 
+platform. However, those executables may be out of date now (based 
+on earlier versions). Especially, executables of version 1.16 and
+newer will not communicate with versions below 1.16.
+
+This program/these programs can be used freely for private or
+educational purposes. If you want to use them for commercial purposes,
+please contact the author. You may redistribute this software only if
+all files from my original distribution are included unchanged. You may
+only add readable documentation files, such as a BBS signature, and only
+if they are marked prominently as additions. If you want to include any
+part of the orignal distribution with other software, please contact the
+author before.
+
+There is no warranty. Use this software on your own risk. Due to the
+complexity and variety of today's hardware and software which may be
+used to run these programs, I am not responsible for any damage or loss
+of data or hardware failures or other damage caused by correct or
+incorrect use of this software. It was tested very well and is expected
+to work correctly, but nobody can actually guarantee this under any
+circumstances. And because this software is essentially free (even if
+you register, you don't pay for using this software but for the service
+of getting upgrades), you get what you pay for ...
+
+Author:      Kai Uwe Rommel
+             Muenchen, Germany
+
+E-mail:      rommel@ars.de

@@ -1,0 +1,13 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\shell\CmdHere]
+@="Command &Prompt Here (DOS ´°¿Ú)"
+
+[HKEY_CLASSES_ROOT\Directory\shell\CmdHere\command]
+@="cmd.exe /k cd \"%1\""
+
+[HKEY_CLASSES_ROOT\Drive\shell\CmdHere]
+@="Command &Prompt Here (DOS ´°¿Ú)"
+
+[HKEY_CLASSES_ROOT\Drive\shell\CmdHere\command]
+@="cmd.exe /k cd \"%1\""

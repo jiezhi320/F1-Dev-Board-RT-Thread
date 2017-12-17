@@ -1,0 +1,487 @@
+
+            SecureCRT(R) 7.0.4 (Official) -- April 4, 2013
+
+            Copyright (C) 1995-2013 VanDyke Software, Inc.
+                        All rights reserved.
+
+
+This file contains a SecureCRT product history.  It includes lists 
+of new features, changes, and bug fixes sorted by release.  For a 
+product description, installation notes, registration information,
+and contact information, please refer to Readme.txt (downloaded 
+with this installation).
+
+
+Changes in SecureCRT 7.0.4 (Official) -- April 4, 2013
+------------------------------------------------------
+
+Bug fixes:
+
+  - SecureCRT could crash if an SFTP tab was performing a transfer and 
+    the tabbed session that launched the SFTP tab was closed.
+  - If several tabbed sessions were connected and CTRL+TAB was used
+    to cycle through them, the tab contents were not always updated.
+  - If a session could not be cloned because the channel connection
+    failed, the cloned session's tab title was blank.
+  - SSH2: If a session specified a remote SFTP directory that contained
+    an invalid character, such as "~", SecureCRT crashed when attemping
+    to connect the SFTP tab.
+  - Windows: On Windows XP, if a session specified more than 140 local
+    forwards, when the session connected, the forwards above the 140th
+    failed.
+  - Mac: If a session had the "Scale the font" resize option set and
+    SecureCRT was maximized, the last line was not visible.
+
+
+Changes in SecureCRT 7.0.3 (Official) -- January 17, 2013
+---------------------------------------------------------
+
+Bug fixes:
+
+  - In the Connect dialog, if a folder was renamed to a string that
+    ended in one or more "." characters, the sessions in the folder
+    were deleted.
+  - Opening the default session in a script caused SecureCRT to crash.
+  - If the "Automate logon" items for a session were re-ordered, the
+    changes were not saved.
+  - If "/Serial" or "/Tapi" (Windows only) was specified on the
+    command line, it was not honored.
+  - If a session that contained ANSI color text in the scrollback was
+    disconnected and reconnected, the ANSI color attributes were no
+    longer in the scrollback.
+  - When enough tabs were open to require the scroll control on the
+    tab bar, if the right-most tab was activated and renamed, the tab
+    bar shifted to the left and the active tab was no longer visible.
+  - Serial: The stop bits were not logged correctly in the trace
+    output.
+  - SSH1/SSH2: If a session used a dynamic tunnel on port 10080 and
+    another SSH1/SSH2 session went through the first session's SOCKS
+    proxy and used a dynamic tunnel on port 1080, SecureCRT crashed
+    when data went through the second tunnel.
+  - Windows: When switching between tiled and tabbed sessions in a
+    maximized window, the terminal area was 24x80 instead of the full
+    window area.
+  - Windows: If the global option "Minimize to Activator in system tray"
+    was set and SecureCRT was closed, if "Connect" was selected from
+    the Activator menu, the icons in the Connect dialog were not mapped
+    to the correct actions.
+  - Mac: The session option "Use ALT as meta key" was not
+    always honored.
+  - Mac: If the global option "Host key database location" was changed
+    to a different path, the new path was not saved.
+  - Mac: If a session prompted for a log file, after the file location
+    was selected, focus did not return to the SecureCRT window.
+
+
+Changes in SecureCRT 7.0.2 (Official) -- October 25, 2012
+---------------------------------------------------------
+
+Changes:
+
+  - Mac: The look of text on Retina displays was improved.
+  - Linux: Character encodings that cannot be used by SecureCRT are
+    no longer shown in Terminal/Appearance category in the Session
+    Options dialog.
+
+Bug fixes:
+
+  - If the protocol type was changed during authentication, SecureCRT
+    crashed.
+  - If a session's emulation was set to "Dumb", it continued to used
+    dumb emulation after being changed to use a different emulation.
+  - If a session reconnected automatically in the background when a
+    different session's tab had focus, the title bar was updated to
+    display the reconnected session name.
+  - Windows: If a laptop was docked such that a secondary monitor was
+    used and then SecureCRT was moved to that monitor and closed, when
+    the laptop was disconnected from the dock and SecureCRT was
+    restarted, it was visible in the task bar, but not on the laptop
+    display.
+  - Windows: On a system that had two monitors with the primary
+    monitor having a larger display resolution than the secondary
+    monitor, when SecureCRT was maximized on the primary monitor and
+    then restored, it used the resolution of the secondary monitor.
+  - Windows: When the sessions were tiled, if the main window was
+    resized, some of the tiled windows did not send a screen resize to
+    the remote system.
+  - Mac/Linux: SecureCRT crashed after the Report button was pressed
+    in the crash handler dialog.
+  - Mac/Linux: If data was being output and the scrollbar was used to
+    look at data in the scrollback buffer, the output was not paused.
+  - Mac: Passwords specified on the command line were ignored if the
+    global option "Use Keychain" was set.
+  - Mac: If the global option "Show confirm disconnect dialog" was set
+    and multiple SecureCRT windows with connected sessions were open
+    and then one window was closed, attempting to switch between the
+    remaining windows using COMMAND+` did not work.
+  - Mac: When SecureCRT was not set as the default Telnet handler and
+    the default Telnet handler check was on, a message was displayed
+    every time SecureCRT went into or out of "Full Screen" mode.
+  - Linux: Error text was not displayed correctly on Ubuntu with the
+    Korean language pack installed and set as the primary language.
+
+
+Changes in SecureCRT 7.0.1 (Official) -- August 28, 2012
+--------------------------------------------------------
+
+Changes:
+
+  - The xterm set title escape sequence ending with \033\\ is
+    supported in addition to \007.
+
+Bug fixes:
+
+  - If the username was sent to a session after the connection was
+    gone, such as when the server had a short authentication timeout,
+    SecureCRT crashed.
+  - Hostkey database paths that contained "%USERPROFILE%" were not
+    expanded correctly.
+  - If a disconnected session had focus and other tabbed or tiled
+    sessions were connected and the "Show confirm disconnect dialog"
+    option was set, SecureCRT did not display the disconnect prompt
+    when the application was closed.
+  - Windows: SHIFT+INSERT could not be used to paste into the Connect
+    bar.
+  - When SecureCRT and SecureFX were integrated, if the configuration
+    folder contained "%APPDATA%", attempting to launch SecureFX from
+    the SecureCRT toolbar caused an error to be reported.
+  - The ConnectInTab script function did not honor the "Reuse
+    disconnected tabs" setting.
+  - Windows: After maximizing and restoring a tiled session, the output
+    was displayed in only the top half of the session window.
+  - Windows: When a SecureCRT session was launched from the Windows 7
+    task bar "Connect..." menu item, it was displayed behind all other
+    application windows.
+  - Windows: A custom menu file configured in SecureCRT 6.7 did not
+    take effect after installing version 7.0 until SecureCRT was
+    closed and restarted.
+  - Windows: When SecureCRT started in tabbed mode after switching
+    between tabbed and tiled windows that connected sessions with
+    small sizes, the application window was smaller than the specified
+    session size.
+  - Windows: When the Windows 7 task bar was not in the default
+    location, and SecureCRT switched from tiled to tabbed mode, the
+    tab bar was not in the correct location.
+  - Windows: The New Session wizard allowed a session to be created
+    with a name that was a Windows reserved keyword, such as COM1 or
+    LPT1.
+  - Mac: SecureCRT could not be installed on OS X 10.8 (Mountain Lion)
+    without disabling the gatekeeper.
+  - Mac: After creating a new or editing an existing color scheme, the
+    Global Options dialog became unresponsive.
+  - Mac: SecureCRT could hang when configuring the tab status
+    indicator rectangle colors.
+  - Mac: Pressing CTRL+TAB or CTRL+SHIFT+TAB did not switch to the
+    next or previous tabs, respectively.
+  - Mac: When SecureCRT was minimized to the dock, it could not be
+    restored by left-clicking it.
+  - Mac: On OS X 10.8 (Mountain Lion), SecureCRT could not locate
+    crash dump files because they were being created in a different
+    folder than in previous versions of OS X.
+  - Mac: The title bar was displayed in full-screen mode.
+  - Linux: SecureCRT prompted when the log file existed, although
+    the "Append to file" option was set.
+
+
+Changes in SecureCRT 7.0 (Official) -- July 3, 2012
+---------------------------------------------------
+
+Bug fixes:
+
+  - SSH1/SSH2: When a window decoration such as the chat window or
+    button bar was toggled, or the Session or Global Options dialog
+    was closed, IPv6 listening ports being used for tunneling were
+    closed.
+  - Windows: When the mouse hovered over the button bar field in the
+    button bar, SecureCRT could crash.
+  - Mac/Linux: If the tab status indicators were set to "Colored
+    rectangles", SecureCRT crashed when trying to lock a tabbed
+    session.
+
+
+Changes in SecureCRT 7.0 (Beta 4) -- June 19, 2012
+--------------------------------------------------
+
+Changes:
+
+  - Windows: In the File menu, "Connect in Tab..." was changed to
+    "Connect in Tab/Tile...".
+  - Windows: In the Connect dialog, when in tiled mode, the "Open in a
+    tab" option is called "Open in a tiled window".
+  - Windows: The limit on the number of menu items that can be in a
+    custom .MNU file was increased from 2000 to 8000.
+
+Bug fixes:
+
+  - If a script issued an "exit" command to an SFTP session, SecureCRT
+    crashed.
+  - If a script issued an "ls" command to an SFTP session, SecureCRT
+    hung.
+  - When multiple tabs were open, sometimes the leftmost tab was
+    shifted over such that the status indicator icon was partially
+    obscured.
+  - When multiple tabs were open, if a tabbed session was closed, the
+    tab to the left of the closed tab was activated instead of the
+    tab to the right.
+  - If the global option "Confirm when closing multiple tabbed or
+    tiled sessions" was on and the global option "Show confirm
+    disconnect dialog" was off, when a single tabbed session was
+    connected and SecureCRT was closed, the confirm disconnect dialog
+    was displayed.
+  - Windows: If the tab status indicator style was set to "Background
+    colors" and a session was disconnected while in tiled mode, the
+    status indicator was incorrect after switching to tabbed mode.
+  - Mac: When the Quick Connect dialog was displayed, the previous
+    hostname was not highlighted.
+
+
+Changes in SecureCRT 7.0 (Beta 3) -- June 5, 2012
+-------------------------------------------------
+
+Changes:
+
+  - Windows: The "Window" menu was changed so that it always contains
+    the following items: Tabs, Tile Vertically, Tile Horizontally,
+    Cascade, and the list of open sessions.
+  - Windows: If the sessions are tiled and a new session is opened,
+    all the sessions are automatically re-tiled.
+  - Windows: When a tiled session is closed, the remaining sessions
+    are automatically re-tiled.
+  - Windows: When the sessions are tiled and the SecureCRT window is
+    re-sized, the sessions are automatically re-tiled.
+
+Bug fixes:
+
+  - Authentication banners were sometimes displayed at the logon
+    prompt.
+  - Unicode and combining characters (Korean in particular) were
+    sometimes rendered incorrectly.
+  - SecureCRT failed to clear all tabstops when the escape sequence
+    to clear all tabstops was processed.
+  - Windows: SecureCRT could hang when used in a Webex session.
+  - Windows: After SecureCRT had been sitting idle for many hours,
+    the interface could become unresponsive.
+  - Windows: SecureCRT could crash if the application window was
+    resized a lot or a lot of tab switching was done.
+  - Windows: SecureCRT crashed when attempting to record a script if
+    no sessions were open.
+  - Windows: SecureCRT crashed if a script was launched from a button
+    or mapped key and no sessions were open.
+  - Windows: If a mapped key or button used "\v" to paste clipboard
+    data, the data pasted was not correct.
+  - Windows: If a session had the "Scale the font" option set, when
+    switching between tabbed and tiled sessions, that session's font
+    could become extremely large.
+  - Windows: The tab titles of cloned sessions did not contain the
+    number indicator (e.g., "(1)", "(2)", etc.).
+  - Mac: If the left margin was increased, selections were offset by
+    the amount of the margin.
+  - Mac: After using COMMAND+W to close SecureCRT, it could not be
+    launched from the dock icon.
+
+
+Changes in SecureCRT 7.0 (Beta 2) -- May 22, 2012
+-------------------------------------------------
+
+Changes:
+
+  - Custom log data is no longer inserted into raw logs.
+  - Mac/Linux: Added support for the "Display logon prompts in
+    terminal window" option.
+  - Mac: The history, readme, and EULA files are now installed in
+    /Applications/SecureCRT.app/Contents/Resources instead of
+    /Library/Application Support/VanDyke/SecureCRT.
+
+Bug fixes:
+
+  - When the option "Scroll to clear screen" was off in a session, if
+    the same session was opened again in another tab or cloned, the
+    option was on in the new sessions.
+  - SecureCRT did not log Korean characters correctly.
+  - The lock icon was not displayed for locked sessions when the tab
+    appearance was set to "Background colors".  The tab is now changed
+    to gray when it's locked.
+  - When the option to show the vertical scroll bar was off, if the
+    application window was maximized and a session was opened in a tab
+    and cloned, the cloned session was blank.
+  - If a tab title was changed via an xterm escape sequence and then
+    the "Session Options" dialog was opened and closed, the tab title
+    was changed to the session name.
+  - Windows: If the toolbar was hidden or the Connect bar was removed
+    from the toolbar, SecureCRT would crash when attempting to display
+    the "View" menu.
+  - Windows: After sending a tiled session to a new window, switching
+    to tabbed mode, and then dragging the session back to the original
+    window, the session name was not displayed.
+  - Windows: If the "Default" session was configured with an incorrect
+    password and the option "Display logon prompts in terminal window"
+    was set, the session failed to connect instead of prompting for
+    the correct password.
+  - Mac/Linux: Attempting to input Korean characters with the IME did
+    not work correctly when one multi-byte character was entered
+    immediately after another multi-byte character.
+  - Mac/Linux: If multiple sessions were connected in tabs at the same
+    time from the "Connect" dialog, the non-active tabs did not have a
+    cursor in them when they activated.
+  - Mac: SecureCRT was not compatible with window managers such Divvy
+    and Deskovery.
+  - Mac: Underscores were displayed as spaces in sessions that used
+    the "Andale Mono" or "Courier New" fonts.
+
+
+Changes in SecureCRT 7.0 (Beta 1) -- May 3, 2012
+------------------------------------------------
+
+New features:
+
+  - Windows: Added the ability to tile sessions within the
+    SecureCRT application window.  Sessions can be tiled vertically,
+    horizontally, or cascaded.  Scripts can use the "Tab" object to 
+    work with tiled sessions.
+  - Added the ability to start a built-in TFTP server when a session
+    connects.
+  - SSH2: Added the ability to skip authentication methods while
+    authenticating.
+  - When the mouse hovers over a button, the command the button is 
+    mapped to is shown as hover text.
+  - Added the ability to map the items on the "Tools" menu to a button
+    or key.
+  - Added the ability to map "Always on Top" to a key.
+  - Added support for the "Insert" key to the Wyse 50/60 emulation.
+  - Windows: Added a global option to ignore the print screen
+    (PrtScn) key being pressed.
+
+Changes:
+
+  - Improved the performance of the "Connect" dialog when the
+    configuration is located on the network.
+  - It is now possible to close the last tab.
+  - The port can now be specified in the "Connect" bar on the toolbar.
+  - The chat window history limit has been increased to 32,000
+    commands.
+  - When scrolling back into the scrollback buffer, empty lines (such
+    as from the "clear" command) are not shown.
+  - Added a way to access buttons that were not visible on the
+    button bar if the configured buttons did not fit in the window.
+  - Added "Send Break" to the "Edit" menu, which sends a Telnet break.
+  - If a change is made to the settings of a cloned session, the
+    change is propagated to the other SecureCRT windows and/or
+    sessions.
+  - The first tabbed session's scrollbar settings are used for
+    subsequent tabbed sessions so that all the sessions will have
+    the same number of rows and columns.
+  - When attempting to use Zmodem to transfer a file larger than
+    4 GB, an error is reported.
+  - The installer now remembers the installation options from the
+    previous install.
+  - Kerberos delegation results are displayed in the trace output.
+  - The script file location is displayed when a script cannot be
+    opened.
+  - The "Connect" dialog now has the same icons as the toolbar.
+  - Changed the button labels on the dialog that is displayed when
+    the default session is changed in order to make it harder to
+    accidentally apply the changes to all sessions.
+  - Telnet: When the session's IP address is IP4, it is displayed
+    in the status bar.
+  - Windows: When there are multiple tabbed sessions, only the
+    active session is displayed in the Windows 7 task bar preview.
+  - Mac: Added the ability for SecureCRT to update changed passwords
+    in the Mac Keychain.
+  - Mac: If a tabbed session is moved out of a SecureCRT window that
+    only contains the one session, the application window is closed.
+  - Mac: The keyboard shortcut for printing is now COMMAND+P.
+  - Mac: The COMMAND key can now be used to select multiple
+    sessions in the "Connect" dialog.
+  - Linux: The global option "Copy on select" is now off by
+    default.
+
+Bug fixes:
+
+  - SecureCRT crashed when a script was run that sent an exit
+    command to an SFTP tab.
+  - SecureCRT crashed if a script called GetOption("[SSH2] Port")
+    on a session that did not specify a firewall.
+  - If a command was typed at the prompt, but ENTER was not pressed,
+    and then the session was scrolled back to the oldest row and the
+    top row was selected and ENTER was pressed, SecureCRT could crash.
+  - SecureCRT crashed when the "Retain size and font" session option
+    was set, the lines of scrollback was set to 0, the visible rows
+    were less than the actual number of rows, the first several rows
+    were not visible, and an escape sequence that erased a line was
+    sent.
+  - Xmodem transfers could hang at the beginning of the transfer.
+  - If a host key hostname contained an escaped ".", it could not
+    be saved.
+  - When using mouse mode in vi, vim, or mc, there was a slight delay
+    between clicking the mouse and the cursor being positioned at the
+    mouse location.
+  - When scripting was administratively prohibited, the "Script" menu
+    was still available.
+  - When the global option "Reuse disconnected tabs" was set and a
+    session that had the "Show chat window" and "Sync view to size"
+    options set was disconnected and then a session with "Sync view to
+    size" enabled, but "Show chat window" disabled was connected, the
+    number of rows in the session was not correct.
+  - When a key was mapped to a function or arrow key that sent a
+    multi-byte escape sequence, the mapped key sometimes didn't
+    work.
+  - The title bar setting in the "Default" session could be used to
+    rename tabs using substitution parameters for "Quick Connect"
+    sessions, but was not honored for saved sessions without a
+    username.
+  - The "Quick Connect" dialog sometimes used the default username or
+    previously used username even though the username was empty.
+  - The keyboard-interactive password prompt was displayed when the
+    password was specified on the command line with the /PASSWORD flag.
+  - If a log file contained a leading space, an error was reported.
+  - The keyboard accelerator for "Clear Screen and Scrollback" did
+    not work from a custom menu.
+  - If there were two tabbed sessions and there was scrollback data
+    in the second tab and then the second tab was disconnected and
+    reused for a different session, the scrollback was not cleared.
+  - When Zmodem was used to transfer a file larger than 2 GB, the
+    progress information was not correct.
+  - If /Log was specified on the command line and additional parameters
+    such as session name or username were also specified, the /Log
+    parameter was not honored.
+  - If Connect() was called from a script and the option to suppress
+    popups was set, it was not possible to detect failures by looking
+    at error codes in crt.GetLastError and crt.GetLastErrorMessage.
+  - SSH1/SSH2: If key re-exchange occurred during a transfer and
+    "zlib@openssh.com" compression was being used, the session
+    disconnected.
+  - SSH2: Authentication failed when the server requested the keyboard-
+    interactive method more than once.
+  - Windows: If the Windows Input Method Editor (IME) was being
+    used to input Korean characters and data was received, the IME
+    was cancelled, causing the wrong character to be inserted into
+    the session.
+  - Windows: When a session name was longer than 32 characters,
+    it was listed twice in the Windows 7 Start menu and taskbar
+    MRU list.
+  - Windows: On Windows 7, if the system Telephony service's startup
+    type was set to "Disabled", a TAPI error was reported when
+    attempting to create a session using the session wizard.
+  - Windows: In the Chinese version of Windows XP and Vista, the font
+    used for the title bar, menu, and status bar was smaller than the
+    system font.
+  - Windows: On Windows XP, the button bar dropdown sometimes
+    displayed the button bar names in a larger than normal font.
+  - Mac: A new session tab could hang after being opened by a script.
+  - Mac: The global option "Reuse disconnected tabs" was not being
+    honored.
+  - Mac: Printing to a PDF file did not work.
+  - Mac: Scrolling could cause stray pixels to be displayed in the
+    session window.
+  - Mac: When the 14-point Monaco font was used and the global
+    option "Enable Font Smoothing" was off, some characters were
+    cut off while being typed.
+  - Mac: If the "Connect" dialog was resized so that it was partially
+    below the dock, the next time it was opened, the top of the
+    dialog was off the screen.
+  - Mac:  If the SecureCRT window was moved by the toolbar, it
+    could get hidden behind the system menu.
+  - Mac/Linux: When the toolbar was hidden, the "Connect" bar could
+    still be accessed using shortcuts.
+  - Linux: It was not possible to copy large amounts of text from
+    a SecureCRT session to the clipboard.

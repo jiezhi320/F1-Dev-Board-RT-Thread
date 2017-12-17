@@ -1,0 +1,1 @@
+xmlresource.exe ./

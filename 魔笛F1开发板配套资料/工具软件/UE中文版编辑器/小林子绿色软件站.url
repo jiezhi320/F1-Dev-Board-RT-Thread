@@ -1,0 +1,14 @@
+[DEFAULT]
+BASEURL=http://bbs.mumayi.net/index.php
+[InternetShortcut]
+URL=http://www.xiaolinzi.com/
+Modified=00F1B39A59EAC50147
+IconFile=C:\WINDOWS\system32\SHELL32.dll
+IconIndex=130
+HotKey=0
+IDList=
+[InternetShortcut.A]
+[InternetShortcut.W]
+IconFile=E:+AFyPb072fxaPkQBc-favicon.ico
+[{000214A0-0000-0000-C000-000000000046}]
+Prop3=19,2
